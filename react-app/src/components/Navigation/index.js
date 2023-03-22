@@ -7,17 +7,24 @@ import './Navigation.css';
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
 
+
 	return (
-		<ul>
-			<li>
-				<NavLink exact to="/">Home</NavLink>
-			</li>
-			{isLoaded && (
+		<div className='splash-nav-container'>
+			{/* <ul>
 				<li>
-					<ProfileButton user={sessionUser} />
+					<NavLink exact to="/">Home</NavLink>
 				</li>
-			)}
-		</ul>
+				{isLoaded && (
+					<li>
+						<ProfileButton user={sessionUser} />
+					</li>
+				)}
+			</ul> */}
+			<div className='splash-nav-content'>
+				<div><NavLink exact to="/">Home</NavLink></div>
+				<div><ProfileButton user={sessionUser} /></div>
+			</div>
+		</div>
 	);
 }
 
