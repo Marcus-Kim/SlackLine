@@ -5,3 +5,13 @@
 .hidden {
   display: none;
 }
+
+.splash-nav-container {
+  background-color: #541554;
+  width: 100%
+}
+
+.splash-nav-content {
+  display: flex;
+  justify-content: space-between;
+}
