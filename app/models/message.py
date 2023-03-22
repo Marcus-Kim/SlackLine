@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-
+from datetime import datetime
 #TODO Create message table
 
 class Message(db.Model):
@@ -15,7 +15,7 @@ class Message(db.Model):
     created_at = db.Column(db.Date, default=datetime.now(tz=None), nullable=False)
 
     user = db.relationship("User", back_populates='messages')
-    channel = db.relationship("Message", back_populates='messages')
+    channel = db.relationship("Channel", back_populates='messages')
 
     def to_dict(self):
         return {
