@@ -21,8 +21,11 @@ function Navigation({ isLoaded }){
 				)}
 			</ul> */}
 			<div className='splash-nav-content'>
-				<div><NavLink exact to="/">Home</NavLink></div>
-				<div><ProfileButton user={sessionUser} /></div>
+				<NavLink exact to="/" className={'splash-nav-home-button'}>SlackLine</NavLink>
+				<div className='splash-nav-login-signup'>
+					<NavLink className={'splash-nav-login-signup-button'} to='/signup'>Sign Up</NavLink>
+					<NavLink className={'splash-nav-login-signup-button'} to='/login'>Log In</NavLink>
+				</div>
 			</div>
 		</div>
 	);

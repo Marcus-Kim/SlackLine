@@ -8,10 +8,46 @@
 
 .splash-nav-container {
   background-color: #541554;
-  width: 100%
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
 }
 
 .splash-nav-content {
   display: flex;
   justify-content: space-between;
+  width: 1250px;
+  margin: auto;
+}
+
+.splash-nav-home-button {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  /* height: 80px; */
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.splash-nav-login-signup {
+  display: flex;
+  column-gap: 20px;
+  align-items: center;
+}
+
+.splash-nav-login-signup-button {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  border: 1px white solid;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.splash-nav-login-signup-button:hover {
+  border: 2px white solid;
+  padding: 9px;
 }

@@ -20,7 +20,7 @@ function App() {
 
   return (
     <>
-      {sessionUser ? <UserNavigation isLoaded={isLoaded} /> : <Navigation isLoaded={isLoaded} />}
+      {sessionUser && <UserNavigation isLoaded={isLoaded} />}
       {isLoaded && (
         <Switch>
           <Route path="/login" >
@@ -33,6 +33,7 @@ function App() {
             {sessionUser ? <HomePage /> : <Redirect to={'/'} />}
           </Route>
           <Route exact path="/">
+            <Navigation isLoaded={isLoaded} />
             {sessionUser ? <Redirect to={"/home"} /> : <SplashPage />}
           </Route>
         </Switch>

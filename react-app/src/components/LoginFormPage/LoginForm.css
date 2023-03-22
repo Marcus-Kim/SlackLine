@@ -1,0 +1,56 @@
+.login-page-container {
+  width: 500px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-page-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 415px;
+}
+
+.login-page-logo {
+  font-weight: bold;
+  font-size: 25px;
+  padding: 45px;
+}
+
+.login-page-title {
+  font-weight: bold;
+  font-size: 45px;
+}
+
+.login-page-title-description {
+  font-size: 18px;
+  padding-top: 10px;
+}
+
+.login-page-password-input,
+.login-page-email-input {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px gray solid;
+}
+
+.login-page-continue-button {
+  width: 101%;
+  height: 43px;
+  background-color: #611f69;
+  color: white;
+  font-weight: bolder;
+  margin: 0px;
+  border: none;
+  border-radius: 5px;
+  font-size: 17px;
+}
+
+.login-page-continue-button:hover {
+  background-color: #703578;
+  cursor: pointer;
+}
