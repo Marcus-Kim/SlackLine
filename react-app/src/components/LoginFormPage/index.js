@@ -22,35 +22,39 @@ function LoginFormPage() {
   };
 
   return (
-    <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="login-page-container">
+      <div className="login-page-logo">SlackLine</div>
+      <div className="login-page-title">First, enter your email</div>
+      <div className="login-page-title-description">We suggest using the email address you use at work</div>
+      <form className="login-page-form" onSubmit={handleSubmit}>
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
         </ul>
-        <label>
-          Email
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            placeholder="name@work-email.com"
+            className="login-page-email-input"
           />
-        </label>
-        <label>
-          Password
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            placeholder="Password"
+            className="login-page-password-input"
           />
-        </label>
-        <button type="submit">Log In</button>
+        <button className="login-page-continue-button" type="submit">Continue</button>
+        <div>
+
+        </div>
+        <button className="demo-login-button">Demo User</button>
       </form>
-    </>
+    </div>
   );
 }
 
