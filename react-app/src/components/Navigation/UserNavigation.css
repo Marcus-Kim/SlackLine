@@ -1,0 +1,32 @@
+.profile-dropdown {
+  position: absolute;
+  list-style: none;
+  border: 1px solid gray;
+  top: 29px;
+  right: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+.user-nav-container {
+  display: flex;
+  justify-content: end;
+  background-color: rgb(18,16,22);
+  height: 45px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #2c2f34;
+  box-sizing: border-box;
+}
+
+.user-nav-profile-button {
+  margin-right: 10px;
+}
+
+.user-nav-logo {
+  color: rgb(204,205,206);
+  font-weight: bolder;
+  margin-left: 10px;
+}

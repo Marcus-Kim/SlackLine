@@ -1,0 +1,31 @@
+.home-container {
+  display: flex;
+  width: 100%
+}
+
+.home-sidebar-container {
+  width: 17%;
+  min-width: 200px;
+  border-right: 1px solid #2c2f34;
+  height: calc(100vh - 45px);
+  background-color: rgb(25,23,29);
+}
+
+.home-content-container {
+  background-color: rgb(26,29,33);
+  width: 83%;
+}
+
+.home-sidebar-heading-container {
+  border-bottom: 1px solid #2c2f34;
+  height: 49px;
+  display: flex;
+  align-items: center;
+  padding: 0px 15px;
+}
+
+.home-sidebar-heading-title {
+  color: rgb(204,205,206);
+  font-size: 18px;
+  font-weight: bold;
+}
