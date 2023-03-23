@@ -1,20 +1,25 @@
+import SideBar from './Sidebar'
+import MainContent from './MainContent'
 import './HomePage.css'
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { thunkGetAllChannels } from '../../store/channels'
+
 function HomePage() {
+  const [selectedChannel, setSelectedChannel] = useState(null)
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    dispatch(thunkGetAllChannels())
+  }, [dispatch])
+
   return (
     <div className="home-container">
-      <div className='home-sidebar-container'>
-        <div className='home-sidebar-heading-container'>
-          <div className='home-sidebar-heading-title'>App Academy</div>
-          <div className='home-sidebar-heading-button'></div>
-        </div>
-        <div className='home-sidebar-content'></div>
-      </div>
-      <div className='home-content-container'>
-
-      </div>
+      <SideBar onChannelSelect={setSelectedChannel} />
+      <MainContent selectedChannel={selectedChannel} />
     </div>
-
   )
 }
+
 
 export default HomePage
