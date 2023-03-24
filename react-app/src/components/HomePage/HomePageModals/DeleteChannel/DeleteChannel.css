@@ -1,0 +1,8 @@
+.delete-channel-modal-container {
+  width: 520px;
+  padding: 30px;
+  color: rgb(204,205,206);
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+}

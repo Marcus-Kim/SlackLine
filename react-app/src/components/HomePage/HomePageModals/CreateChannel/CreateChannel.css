@@ -1,0 +1,83 @@
+.create-channel-modal-container {
+  width: 520px;
+  padding: 30px;
+  color: rgb(204,205,206);
+  display: flex;
+  flex-direction: column;
+  height: 435px;
+}
+
+.create-channel-modal-title-exit {
+  display: flex;
+  justify-content: space-between;
+}
+
+.create-channel-modal-title {
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+.create-channel-modal-description {
+  color: rgb(147,147,150);
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.create-channel-modal-form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.channel-name-description-container,
+.channel-name-input-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 7px;
+  margin-bottom: 19px;
+}
+
+.create-channel-input-field {
+  background-color: rgb(26,29,33);
+  border: 1px solid rgba(204, 205, 206, 0.37);
+  height: 42px;
+  border-radius: 4px;
+  padding-left: 10px;
+  font-size: large;
+  caret-color: white;
+}
+
+.create-channel-input-field:focus {
+  border-color: none;
+  border: 1px solid rgb(27,67,86);
+}
+
+.create-channel-input-label {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.optional {
+  font-weight: 100;
+  color: rgb(147,147,150);
+}
+
+.create-channel-modal-button {
+  background-color: rgb(0,122,90);
+  color: white;
+  border: none;
+  height: 35px;
+  font-weight: 700;
+  border-radius: 4px;
+  width: 70px;
+  align-self: flex-end;
+}
+
+.create-channel-modal-button:hover {
+  background-color: rgb(20,133,103);
+  cursor: pointer;
+}
+
+.description-description {
+  color: rgb(147,147,150);
+  font-size: 13px;
+}

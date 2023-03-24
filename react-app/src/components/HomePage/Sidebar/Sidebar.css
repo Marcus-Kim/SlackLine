@@ -1,0 +1,64 @@
+.home-sidebar-container {
+  width: 17%;
+  /* min-width: 200px; */
+  border-right: 1px solid #2c2f34;
+  height: calc(100vh - 45px);
+  background-color: rgb(25,23,29);
+}
+
+.home-sidebar-heading-container {
+  border-bottom: 1px solid #2c2f34;
+  height: 49px;
+  display: flex;
+  align-items: center;
+  padding: 0px 15px;
+}
+
+.home-sidebar-heading-title {
+  color: rgb(204,205,206);
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.home-sidebar-channel,
+.home-sidebar-channels-header-title {
+  color: rgb(147,147,150);
+}
+
+.home-sidebar-channels-header {
+  display: flex;
+
+}
+
+.home-sidebar-content {
+  padding: 12px 10px;
+}
+
+.home-sidebar-channel {
+  padding: 5px 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.home-sidebar-channel:hover {
+  background-color: rgb(39,36,44);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.channel-hashtag {
+  padding-right: 11px;
+}
+
+.home-sidebar-channel-name {
+  display: flex;
+}
+
+.home-sidebar-channel:hover .channel-delete-button {
+  visibility: visible;
+}
+
+.channel-delete-button {
+  visibility: hidden;
+}
+
