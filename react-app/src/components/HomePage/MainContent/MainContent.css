@@ -2,3 +2,19 @@
   background-color: rgb(26,29,33);
   width: 83%;
 }
+
+.home-content-header-container {
+  border-bottom: 1px solid #2c2f34;
+  height: 49px;
+  display: flex;
+  align-items: center;
+  padding: 0px 15px;
+  color: rgb(204,205,206);
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.main-hashtag {
+  padding-right: 5px;
+  padding-left: 7px;
+}

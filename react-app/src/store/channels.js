@@ -1,6 +1,7 @@
 // ACTIONS
 const GET_CHANNELS = 'channels/GET_CHANNELS'
 const CREATE_CHANNEL = 'channels/CREATE'
+const DELETE_CHANNEL = 'channels/DELETE'
 
 // ACTION CREATORS
 const actionGetAllChannels = (channels) => ({
@@ -13,6 +14,10 @@ const actionCreateChannel = (channel) => ({
   payload: channel
 })
 
+const actionDeleteChannel = (id) => ({
+  type: DELETE_CHANNEL,
+  id
+})
 // THUNKS
 export const thunkGetAllChannels = () => async (dispatch) => {
   const response = await fetch('/api/channels/');
@@ -38,6 +43,16 @@ export const thunkCreateChannel = (channelDetails) => async (dispatch) => {
   }
 }
 
+export const thunkDeleteChannel = (channelId) => async (dispatch) => {
+  const response = await fetch(`/api/channels/${channelId}`, {
+    method: 'DELETE'
+  });
+
+  if (response.ok) {
+    dispatch(actionDeleteChannel);
+  }
+}
+
 // INITIAL STATE
 const initialState = { allChannels: {}, singleChannel: {} }
 
@@ -56,7 +71,11 @@ export default function reducer(state = initialState, action) {
       newState.allChannels[action.payload.id] = action.payload
       return newState;
     }
-
+    case DELETE_CHANNEL: {
+      const newState = { ...state }
+      delete newState.allChannels[action.payload]
+      return newState;
+    }
     default:
       return state;
   }

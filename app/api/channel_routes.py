@@ -46,3 +46,10 @@ def create_channel():
 
 #TODO Delete a channel
     # Must be the owner to delete the channel
+@channel_routes.route('/<int:channelId>', methods=['DELETE'])
+@login_required
+def delete_channel(channelId):
+    channel = Channel.query.get(channelId)
+    db.session.delete(channel)
+    db.session.commit()
+    return "Successfully Deleted"

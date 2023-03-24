@@ -4,11 +4,15 @@ import OpenModalButton from '../../OpenModalButton'
 import CreateChannelModal from '../HomePageModals/CreateChannel/CreateChannel'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { useEffect } from 'react'
+import DeleteChannelModal from '../HomePageModals/DeleteChannel/DeleteChannel'
 
 
-function SideBar() {
-  const channels = useSelector(state => Object.values(state.channels.allChannels))
+function SideBar({ channels, onChannelSelect }) {
 
+  useEffect(() => {
+    onChannelSelect(channels[0])
+  }, [])
 
   return (
     <div className='home-sidebar-container'>
@@ -22,7 +26,13 @@ function SideBar() {
             <OpenModalButton buttonText={<FontAwesomeIcon icon={faPlus}/>} modalComponent={<CreateChannelModal />}/>
           </div>
           {channels.map(channel => (
-            <div className='home-sidebar-channel' key={channel.id}>{channel.name}</div>
+            <div className='home-sidebar-channel' key={channel.id} onClick={() => onChannelSelect(channel)}>
+              <div className='home-sidebar-channel-name'>
+                <div className='channel-hashtag'>#</div>
+                <div>{channel.name}</div>
+              </div>
+                <OpenModalButton className={'channel-delete-button'} buttonText='X' modalComponent={<DeleteChannelModal channelId={channel.id} />}/>
+            </div>
           ))}
         </div>
       </div>

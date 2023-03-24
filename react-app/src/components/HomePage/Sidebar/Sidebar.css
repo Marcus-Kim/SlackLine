@@ -27,5 +27,38 @@
 
 .home-sidebar-channels-header {
   display: flex;
-  
+
 }
+
+.home-sidebar-content {
+  padding: 12px 10px;
+}
+
+.home-sidebar-channel {
+  padding: 5px 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.home-sidebar-channel:hover {
+  background-color: rgb(39,36,44);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.channel-hashtag {
+  padding-right: 11px;
+}
+
+.home-sidebar-channel-name {
+  display: flex;
+}
+
+.home-sidebar-channel:hover .channel-delete-button {
+  visibility: visible;
+}
+
+.channel-delete-button {
+  visibility: hidden;
+}
+
