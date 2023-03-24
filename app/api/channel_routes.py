@@ -16,6 +16,13 @@ def get_all_channels():
     channels = Channel.query.all()
     return {'channels': [channel.to_dict() for channel in channels]}
 
+#TODO Get Channel by ID
+@channel_routes.route('/<int:id>')
+@login_required
+def get_channel_by_id(id):
+    channel = Channel.query.get(id)
+    return channel.to_dict()
+
 #TODO Create a channel
     # Creating a channel should automatically add the user to the channel_users
 @channel_routes.route('/', methods=['POST'])
@@ -50,6 +57,7 @@ def create_channel():
 @login_required
 def delete_channel(channelId):
     channel = Channel.query.get(channelId)
+    print(channel)
     db.session.delete(channel)
     db.session.commit()
-    return "Successfully Deleted"
+    return { 'message': 'Successfully Deleted!'}

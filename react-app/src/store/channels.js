@@ -2,6 +2,7 @@
 const GET_CHANNELS = 'channels/GET_CHANNELS'
 const CREATE_CHANNEL = 'channels/CREATE'
 const DELETE_CHANNEL = 'channels/DELETE'
+const GET_SINGLE_CHANNEL = 'channels/GET_SINGLE_CHANNEL'
 
 // ACTION CREATORS
 const actionGetAllChannels = (channels) => ({
@@ -18,6 +19,11 @@ const actionDeleteChannel = (id) => ({
   type: DELETE_CHANNEL,
   id
 })
+
+const actionGetSingleChannel = (channel) => ({
+  type: GET_SINGLE_CHANNEL,
+  payload: channel
+})
 // THUNKS
 export const thunkGetAllChannels = () => async (dispatch) => {
   const response = await fetch('/api/channels/');
@@ -25,6 +31,16 @@ export const thunkGetAllChannels = () => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(actionGetAllChannels(data))
+  }
+}
+
+export const thunkGetSingleChannel = (id) => async (dispatch) => {
+  const response = await fetch(`/api/channels/${id}`);
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(actionGetSingleChannel(data))
+    return data;
   }
 }
 
@@ -44,12 +60,12 @@ export const thunkCreateChannel = (channelDetails) => async (dispatch) => {
 }
 
 export const thunkDeleteChannel = (channelId) => async (dispatch) => {
-  const response = await fetch(`/api/channels/${channelId}`, {
+  const response = await fetch(`/api/channels/${+channelId}`, {
     method: 'DELETE'
   });
 
   if (response.ok) {
-    dispatch(actionDeleteChannel);
+    dispatch(actionDeleteChannel(+channelId));
   }
 }
 
@@ -64,6 +80,11 @@ export default function reducer(state = initialState, action) {
       action.payload.channels.forEach(channel => {
         newState.allChannels[channel.id] = channel
       });
+      return newState;
+    }
+    case GET_SINGLE_CHANNEL: {
+      const newState = { ...state };
+      newState.singleChannel = action.payload;
       return newState;
     }
     case CREATE_CHANNEL: {
