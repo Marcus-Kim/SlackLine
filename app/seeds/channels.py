@@ -15,7 +15,7 @@ def seed_channels():
             description=channel['description']
         ))
 
-        db.session.commit()
+    db.session.commit()
 
 
 # Uses a raw SQL query to TRUNCATE or DELETE the transactions table. SQLAlchemy

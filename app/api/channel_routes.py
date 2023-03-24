@@ -25,9 +25,8 @@ def create_channel():
     channel_name = req_body['name']
     channel_description = req_body['description']
     form = ChannelCreateForm(data=req_body)
-
-    print("FORM DATA: ", form.data['name'])
     user = current_user
+    print(channel_name, channel_description, user.id)
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         channel = Channel(
@@ -38,7 +37,7 @@ def create_channel():
         db.session.add(channel)
         db.session.commit()
         return channel.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return {'errors': validation_errors_to_error_messages(form.errors)}
 
 
 

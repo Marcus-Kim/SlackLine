@@ -21,6 +21,11 @@
 }
 
 .home-sidebar-channel,
-.home-sidebar-channels-header {
+.home-sidebar-channels-header-title {
   color: rgb(147,147,150);
+}
+
+.home-sidebar-channels-header {
+  display: flex;
+  
 }
