@@ -3,6 +3,7 @@ const GET_CHANNELS = 'channels/GET_CHANNELS'
 const CREATE_CHANNEL = 'channels/CREATE'
 const DELETE_CHANNEL = 'channels/DELETE'
 const GET_SINGLE_CHANNEL = 'channels/GET_SINGLE_CHANNEL'
+const EDIT_CHANNEL = 'channels/EDIT'
 
 // ACTION CREATORS
 const actionGetAllChannels = (channels) => ({
@@ -24,6 +25,12 @@ const actionGetSingleChannel = (channel) => ({
   type: GET_SINGLE_CHANNEL,
   payload: channel
 })
+
+const actionEditChannel = (channel) => ({
+  type: EDIT_CHANNEL,
+  payload: channel
+})
+
 // THUNKS
 export const thunkGetAllChannels = () => async (dispatch) => {
   const response = await fetch('/api/channels/');
@@ -69,6 +76,21 @@ export const thunkDeleteChannel = (channelId) => async (dispatch) => {
   }
 }
 
+export const thunkEditChannel = (channelId, channel) => async (dispatch) => {
+  console.log('CHANNEL ID: ', channelId)
+  const response = await fetch(`/api/channels/${channelId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(channel)
+  })
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(actionEditChannel(data))
+    return data;
+  }
+}
+
 // INITIAL STATE
 const initialState = { allChannels: {}, singleChannel: {} }
 
@@ -92,9 +114,14 @@ export default function reducer(state = initialState, action) {
       newState.allChannels[action.payload.id] = action.payload
       return newState;
     }
+    case EDIT_CHANNEL: {
+      const newState = { ...state };
+      newState.allChannels[action.payload.id] = action.payload;
+      return newState;
+    }
     case DELETE_CHANNEL: {
       const newState = { ...state }
-      delete newState.allChannels[action.payload]
+      delete newState.allChannels[action.id]
       return newState;
     }
     default:

@@ -18,7 +18,7 @@ function HomePage() {
     };
 
     fetchChannels();
-  }, [dispatch]);
+  }, [dispatch, channels.length]);
 
   if (!channels.length) return null;
 
@@ -31,8 +31,8 @@ function HomePage() {
           <>
             <SideBar channels={channels} />
             <Switch>
-              <Route exact path="/">
-                <MainContent />
+              <Route exact path="/home">
+                <MainContent selectedChannel={channels[0]}/>
               </Route>
               {channels.map((channel) => (
                 <Route key={channel.id} path={`/home/channel/${channel.id}`}>

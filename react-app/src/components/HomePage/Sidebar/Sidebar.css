@@ -38,6 +38,7 @@
   padding: 5px 15px;
   display: flex;
   justify-content: space-between;
+  text-decoration: none;
 }
 
 .home-sidebar-channel:hover {
@@ -54,11 +55,13 @@
   display: flex;
 }
 
+.home-sidebar-channel:hover .channel-edit-button,
 .home-sidebar-channel:hover .channel-delete-button {
   visibility: visible;
+  cursor: pointer;
 }
 
+.channel-edit-button,
 .channel-delete-button {
   visibility: hidden;
 }
-
