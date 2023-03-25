@@ -29,7 +29,7 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route exact path={'/home'}>
+          <Route path={'/home'}>
             {sessionUser ? <HomePage /> : <Redirect to={'/'} />}
           </Route>
           <Route exact path="/">

@@ -22,8 +22,7 @@ def seed_messages():
             body=message['body']
         )
         db.session.add(new_message)
-
-    db.session.commit()
+        db.session.commit()
 
 def undo_messages():
     if environment == "production":

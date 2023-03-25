@@ -1,17 +1,19 @@
 import './DeleteChannel.css'
 import { thunkDeleteChannel } from '../../../../store/channels'
 import { useModal } from '../../../../context/Modal'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { useHistory, useParams } from 'react-router-dom'
 
-function DeleteChannelModal({ channelId }) {
+function DeleteChannelModal({ channelId, activeId }) {
   const dispatch = useDispatch()
   const { closeModal } = useModal();
-  const general = useSelector(state => state.channels.allChannels[0])
+  const history = useHistory()
 
   const handleClick = async (e) => {
     e.preventDefault()
 
     await dispatch(thunkDeleteChannel(channelId))
+      .then(() => history.push(`/home/channel/${activeId}`))
     closeModal();
   }
 

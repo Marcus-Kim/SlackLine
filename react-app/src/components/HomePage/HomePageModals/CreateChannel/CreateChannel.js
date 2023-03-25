@@ -3,6 +3,7 @@ import './CreateChannel.css'
 import { useModal } from "../../../../context/Modal"
 import { thunkCreateChannel } from "../../../../store/channels"
 import { useDispatch } from "react-redux"
+import { useHistory } from "react-router-dom"
 
 
 function CreateChannelModal() {
@@ -12,6 +13,7 @@ function CreateChannelModal() {
 
   const { closeModal } = useModal();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -22,13 +24,19 @@ function CreateChannelModal() {
     }
 
     const data = await dispatch(thunkCreateChannel(newChannel))
+
     if (data.errors) {
       setErrors(data.errors);
       return;
     }
 
+    if (data.id) {
+      history.push(`/home/channel/${data.id}`)
+    }
+
     setErrors([]);
     closeModal();
+
   }
 
 
