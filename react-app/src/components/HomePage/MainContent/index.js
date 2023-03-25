@@ -1,10 +1,19 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import './MainContent.css';
 
 function MainContent({ selectedChannel }) {
   const messages = useSelector(state => Object.values(state.messages.channelMessages[selectedChannel.id]))
-  console.log(messages)
+  const [message, setMessage] = useState('');
+
   if (!selectedChannel) return null;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    
+  }
+
   return (
     <div className='home-content-container'>
       <div className='home-content-header-container'><span className='main-hashtag'>#</span>{selectedChannel.name}</div>
@@ -19,7 +28,15 @@ function MainContent({ selectedChannel }) {
       <form className='message-form-container'>
         <textarea
           className='message-form-input'
+          placeholder={`Message #${selectedChannel.name}`}
+          value={message}
+          onChange={e => setMessage(e.target.value)}
         />
+        <button
+          type='submit'
+          className='message-form-submit-button'
+          disabled={message.length == 0}
+          >Send</button>
       </form>
     </div>
   );
