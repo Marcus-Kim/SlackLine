@@ -18,3 +18,60 @@
   padding-right: 5px;
   padding-left: 7px;
 }
+
+.home-content-messages-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 98px - 100px);
+  overflow-y: auto;
+  padding-bottom: 20px;
+  justify-content: flex-end;
+  row-gap: 10px;
+}
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+
+}
+
+.message-container:hover {
+  background-color: rgb(34,37,41);
+}
+
+.message-username {
+  color: rgb(209,210,200)
+}
+
+.message-body {
+  color: rgb(167,171,173)
+}
+
+.message-form-container {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.message-form-input {
+  flex: 1;
+  height: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: rgb(34,37,41);
+  border: 2px solid rgb(86,88,86);
+  border-radius: 8px;
+  caret-color: rgba(255, 255, 255, 0.63);
+  color: rgb(194,195,197);
+  font-size: 15px;
+}
+
+.message-form-input:focus {
+  outline: none;
+}

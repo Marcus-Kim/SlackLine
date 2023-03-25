@@ -23,8 +23,8 @@ function SideBar({ channels }) {
         </div>
         <div className='home-sidebar-content'>
           <div className='home-sidebar-channels-header'>
-            <div className='home-sidebar-channels-header-title'>Channel</div>
-            <OpenModalButton buttonText={<FontAwesomeIcon icon={faPlus}/>} modalComponent={<CreateChannelModal />}/>
+            <div className='home-sidebar-channels-header-title'>Channels</div>
+            <OpenModalButton className={'add-channel-button'} buttonText={'+'} modalComponent={<CreateChannelModal />}/>
           </div>
           {channels.map(channel => (
             <div onClick={(e) => {

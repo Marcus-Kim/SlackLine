@@ -85,3 +85,6 @@ def delete_channel(channelId):
     db.session.delete(channel)
     db.session.commit()
     return { 'message': 'Successfully Deleted!'}
+
+#TODO Get all Channel Messages
+

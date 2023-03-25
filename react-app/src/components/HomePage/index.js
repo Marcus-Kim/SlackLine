@@ -5,6 +5,7 @@ import './HomePage.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetAllChannels, thunkGetMessagesForChannel } from '../../store/channels';
+import { thunkGetAllMessages } from "../../store/messages";
 
 function HomePage() {
   const channels = useSelector((state) => Object.values(state.channels.allChannels));
@@ -14,6 +15,7 @@ function HomePage() {
   useEffect(() => {
     const fetchChannels = async () => {
       await dispatch(thunkGetAllChannels());
+      await dispatch(thunkGetAllMessages());
       setLoading(false);
     };
 

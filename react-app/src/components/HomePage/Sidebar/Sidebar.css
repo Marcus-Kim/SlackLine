@@ -27,7 +27,7 @@
 
 .home-sidebar-channels-header {
   display: flex;
-
+  padding: 5px 15px;
 }
 
 .home-sidebar-content {
@@ -64,4 +64,19 @@
 .channel-edit-button,
 .channel-delete-button {
   visibility: hidden;
+}
+
+.add-channel-button {
+  background-color: transparent;
+  border: none;
+  color: rgb(159,158,161);
+  font-weight: bold;
+  font-size: 15px;
+  padding: 0px;
+  width: 20px;
+}
+
+.add-channel-button:hover {
+  background-color: rgb(39,36,44);
+  border-radius: 5px;
 }
