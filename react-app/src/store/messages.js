@@ -2,6 +2,7 @@
 const GET_ALL_MESSAGES = 'messages/GET_ALL';
 const CREATE_CHANNEL_MESSAGE = 'messages/channel/CREATE'
 const GET_CHANNELID_MESSAGES = 'messages/CHANNEL_ID_GET'
+const DELETE_CHANNEL_MESSAGE = 'messages/channel/DELETE'
 
 // ACTION CREATORS
 const actionGetAllMessages = (messages) => ({
@@ -20,6 +21,14 @@ const actionGetChannelIdMessages = (messages, channelId) => ({
 export const actionCreateChannelMessage = (message) => ({
   type: CREATE_CHANNEL_MESSAGE,
   payload: message
+})
+
+const actionDeleteChannelMessage = (channelId, messageId) => ({
+  type: DELETE_CHANNEL_MESSAGE,
+  payload: {
+    channelId,
+    messageId
+  }
 })
 
 // THUNKS
@@ -59,6 +68,18 @@ export const thunkCreateChannelMessage = (message) => async (dispatch) => {
   dispatch(actionCreateChannelMessage(message));
 }
 
+export const thunkDeleteChannelMessage = (channelId, messageId) => async (dispatch) => {
+  const response = await fetch(`/api/messages/${messageId}`, {
+    method: 'DELETE'
+  })
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(actionDeleteChannelMessage(channelId, messageId))
+    return data;
+  }
+}
+
 // INITIAL STATE
 const initialState = {
   channelMessages: {},
@@ -91,6 +112,11 @@ export default function reducer(state = initialState, action) {
       action.payload.messages.forEach(message => {
         newState.channelMessages[action.payload.channelId][message.id] = message
       })
+      return newState;
+    }
+    case DELETE_CHANNEL_MESSAGE: {
+      const newState = { ...state };
+      delete newState.channelMessages[action.payload.channelId][action.payload.messageId]
       return newState;
     }
     default:

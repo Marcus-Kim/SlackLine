@@ -13,3 +13,14 @@ def get_messages():
     data = [message.to_dict() for message in messages];
 
     return data;
+
+#TODO Delete message by id
+@message_routes.route('/<int:messageId>', methods=['DELETE'])
+@login_required
+def delete_message(messageId):
+    message = Message.query.get(messageId)
+
+    db.session.delete(message)
+    db.session.commit()
+
+    return { 'message': 'Successfully Deleted' }

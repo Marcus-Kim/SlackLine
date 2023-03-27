@@ -112,3 +112,11 @@ def get_channel_messages_by_id(channelId):
     messages = Message.query.filter_by(channel_id=channelId).all()
 
     return [message.to_dict() for message in messages]
+
+#TODO Delete Message by Channel Id
+@channel_routes.route('/<int:channelId>/messages/<int:messageId>', methods=['DELETE'])
+@login_required
+def delete_channel_message(channelId, messageId):
+    message = Message.query.filter_by(channelId=channelId, id=messageId)
+    
+    print(message.to_dict())

@@ -4,6 +4,10 @@ import './MainContent.css';
 import { thunkGetAllChannelIdMessages } from '../../../store/messages';
 import { io } from 'socket.io-client';
 import { actionCreateChannelMessage } from '../../../store/messages';
+import DeleteMessageModal from '../HomePageModals/DeleteMessage/DeleteMessageModal';
+import OpenModalButton from '../../OpenModalButton';
+
+let socket;
 
 function MainContent({ selectedChannel }) {
   // const messages = useSelector(state => Object.values(state.messages.channelMessages[selectedChannel.id]))
@@ -12,17 +16,24 @@ function MainContent({ selectedChannel }) {
   const user = useSelector(state => state.session.user);
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
-  const socket = io.connect('http://localhost:5000')
 
   useEffect(() => {
     dispatch(thunkGetAllChannelIdMessages(selectedChannel.id))
   }, [dispatch, selectedChannel.id])
 
   useEffect(() => {
-    socket.on('response', (message) => {
+
+    // create websocket/connect
+    socket = io();
+    socket.on("channel_message", (message) => {
       dispatch(actionCreateChannelMessage(message))
     })
-  }, [dispatch, socket])
+
+    // when component unmounts, disconnect
+    return (() => {
+        socket.disconnect()
+    })
+  }, [])
 
   if (!selectedChannel) return null;
 
@@ -35,7 +46,7 @@ function MainContent({ selectedChannel }) {
       body: message
     }
 
-    socket.emit('message', newMessage)
+    socket.emit('channel_message', newMessage)
 
     // const response = await dispatch(thunkCreateChannelMessage(selectedChannel.id, newMessage))
 
@@ -55,9 +66,17 @@ function MainContent({ selectedChannel }) {
       <div className='home-content-header-container'><span className='main-hashtag'>#</span>{selectedChannel.name}</div>
       <div className='home-content-messages-container'>
         {messages[selectedChannel.id] ? Object.values(messages[selectedChannel.id]).map(message => (
-          <div className='message-container'>
-            <div className='message-username'>{message.username}</div>
-            <div className='message-body'>{message.body}</div>
+          <div className='message-container-container'>
+            <div className='message-container'>
+              <div className='message-username'>{message.username}</div>
+              <div className='message-body'>{message.body}</div>
+            </div>
+            {user.id == message.user_id && (
+              <div className='message-edit-delete-buttons'>
+                <OpenModalButton buttonText={'Delete'} modalComponent={<DeleteMessageModal channelId={selectedChannel.id} messageId={message.id}/>}/>
+                <button>Edit</button>
+              </div>
+            )}
           </div>
         )) : (
           <div className='message-container'>
