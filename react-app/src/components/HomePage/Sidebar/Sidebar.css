@@ -53,6 +53,7 @@
 
 .home-sidebar-channel-name {
   display: flex;
+  align-items: center;
 }
 
 .home-sidebar-channel:hover .channel-edit-button,

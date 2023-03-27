@@ -27,6 +27,6 @@ class Message(db.Model):
             'user_id': self.user_id,
             'channel_id': self.channel_id,
             'body': self.body,
-            'created_at': self.created_at,
+            'created_at': self.created_at.strftime('%Y-%m-%d %H:%M:%S'),
             'username': self.get_name
         }
