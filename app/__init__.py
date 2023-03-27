@@ -20,6 +20,9 @@ from .models import Message
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 
+from app import app, socketio
+import eventlet
+
 # Setup login manager
 login = LoginManager(app)
 login.login_view = 'auth.unauthorized'

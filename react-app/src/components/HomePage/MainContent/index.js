@@ -20,7 +20,7 @@ function MainContent({ selectedChannel }) {
     socket.on('response', (message) => {
       dispatch(actionCreateChannelMessage(message))
     })
-  }, [socket])
+  }, [dispatch, socket])
 
   if (!selectedChannel) return null;
 
@@ -38,8 +38,15 @@ function MainContent({ selectedChannel }) {
     // const response = await dispatch(thunkCreateChannelMessage(selectedChannel.id, newMessage))
 
     // if (response) setMessage('');
-
+    setMessage('')
   }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+  };
 
   return (
     <div className='home-content-container'>
@@ -58,6 +65,7 @@ function MainContent({ selectedChannel }) {
           placeholder={`Message #${selectedChannel.name}`}
           value={message}
           onChange={e => setMessage(e.target.value)}
+          onKeyDown={e => handleKeyDown(e)}
         />
         <button
           type='submit'
