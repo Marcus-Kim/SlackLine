@@ -82,6 +82,7 @@ export default function reducer(state = initialState, action) {
     }
     case CREATE_CHANNEL_MESSAGE: {
       const newState = { ...state };
+      if (!newState.channelMessages[action.payload.channel_id]) newState.channelMessages[action.payload.channel_id] = {};
       newState.channelMessages[action.payload.channel_id][action.payload.id] = action.payload
       return newState;
     }

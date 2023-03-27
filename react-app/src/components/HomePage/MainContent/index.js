@@ -6,7 +6,9 @@ import { io } from 'socket.io-client';
 import { actionCreateChannelMessage } from '../../../store/messages';
 
 function MainContent({ selectedChannel }) {
-  const messages = useSelector(state => Object.values(state.messages.channelMessages[selectedChannel.id]))
+  // const messages = useSelector(state => Object.values(state.messages.channelMessages[selectedChannel.id]))
+  const messages = useSelector(state => state.messages.channelMessages)
+  console.log(messages)
   const user = useSelector(state => state.session.user);
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
@@ -52,12 +54,16 @@ function MainContent({ selectedChannel }) {
     <div className='home-content-container'>
       <div className='home-content-header-container'><span className='main-hashtag'>#</span>{selectedChannel.name}</div>
       <div className='home-content-messages-container'>
-        {messages.map(message => (
+        {messages[selectedChannel.id] ? Object.values(messages[selectedChannel.id]).map(message => (
           <div className='message-container'>
             <div className='message-username'>{message.username}</div>
             <div className='message-body'>{message.body}</div>
           </div>
-        ))}
+        )) : (
+          <div className='message-container'>
+            <div className='message-body'>No messages yet</div>
+          </div>
+        )}
       </div>
       <form className='message-form-container' onSubmit={e => handleSubmit(e)}>
         <textarea
