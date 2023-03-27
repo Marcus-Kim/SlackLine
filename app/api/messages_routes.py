@@ -9,7 +9,7 @@ message_routes = Blueprint('messages', __name__)
 @login_required
 def get_messages():
     messages = Message.query.all();
-    
+
     data = [message.to_dict() for message in messages];
-    
+
     return data;

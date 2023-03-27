@@ -1,8 +1,10 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Channel, db
+from app.models import Channel, db, Message
 from ..forms.channel_form import ChannelCreateForm, ChannelEditForm, unique_channel_name
 from .auth_routes import validation_errors_to_error_messages
+
+from flask_socketio import emit
 
 channel_routes = Blueprint('channels', __name__)
 
@@ -86,5 +88,27 @@ def delete_channel(channelId):
     db.session.commit()
     return { 'message': 'Successfully Deleted!'}
 
-#TODO Get all Channel Messages
+#TODO Create Message by Channel Id
+@channel_routes.route('/<int:channelId>/messages', methods=['POST'])
+@login_required
+def create_channel_message(channelId):
+    req_body = request.get_json()
+    print('REQ_BODY', req_body)
+    message = Message(
+        user_id = current_user.id,
+        channel_id = channelId,
+        body = req_body['body']
+    )
 
+    db.session.add(message)
+    db.session.commit()
+
+    return message.to_dict()
+
+#TODO Get Messages by Channel Id
+@channel_routes.route('/<int:channelId>/messages')
+@login_required
+def get_channel_messages_by_id(channelId):
+    messages = Message.query.filter_by(channel_id=channelId).all()
+
+    return [message.to_dict() for message in messages]

@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, session, redirect
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
@@ -11,8 +11,14 @@ from .api.channel_routes import channel_routes
 from .api.messages_routes import message_routes
 from .seeds import seed_commands
 from .config import Config
+from flask_socketio import SocketIO, emit
+from eventlet import monkey_patch
+import eventlet
+from .models import Message
+
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 
 # Setup login manager
 login = LoginManager(app)
@@ -93,3 +99,17 @@ def react_root(path):
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
+
+@socketio.on('message')
+def handle_message(message):
+    print('received message: ', message)
+
+    new_message = Message(
+        user_id = message['user_id'],
+        channel_id = message['channel_id'],
+        body = message['body']
+    )
+    db.session.add(new_message)
+    db.session.commit()
+    print('NEW MESSAGE: ', new_message.to_dict())
+    emit('response', new_message.to_dict())
