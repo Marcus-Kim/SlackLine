@@ -30,3 +30,9 @@
   font-weight: bolder;
   margin-left: 10px;
 }
+
+.profile-icon {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}

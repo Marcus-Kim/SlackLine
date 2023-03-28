@@ -4,6 +4,8 @@ import { useModal } from "../../../../context/Modal"
 import { thunkCreateChannel } from "../../../../store/channels"
 import { useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
 
 
 function CreateChannelModal() {
@@ -44,7 +46,9 @@ function CreateChannelModal() {
     <div className="create-channel-modal-container">
       <div className="create-channel-modal-title-exit">
         <div className="create-channel-modal-title">Create a channel</div>
-        <div className="create-channel-modal-exit">x</div>
+        <div className="create-channel-modal-exit" onClick={closeModal}>
+          <FontAwesomeIcon className="create-channel-modal-exit-button" icon={faXmark} />
+        </div>
       </div>
       <div className="create-channel-modal-description">
         Channels are where your team opens a line of communication. Make sure nobody is slacking off!!

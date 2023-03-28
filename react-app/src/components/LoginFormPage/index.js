@@ -21,6 +21,12 @@ function LoginFormPage() {
     }
   };
 
+  const demoLogin = (e) => {
+    e.preventDefault();
+
+    dispatch(login('demo@aa.io', 'password'))
+  }
+
   return (
     <div className="login-page-container">
       <div className="login-page-logo">SlackLine</div>
@@ -52,7 +58,7 @@ function LoginFormPage() {
         <div>
 
         </div>
-        <button className="demo-login-button">Demo User</button>
+        <button className="demo-login-button" onClick={e => demoLogin(e)}>Demo User</button>
       </form>
     </div>
   );

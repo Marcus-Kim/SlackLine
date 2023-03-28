@@ -2,7 +2,7 @@ import './Sidebar.css'
 import OpenModalButton from '../../OpenModalButton'
 import CreateChannelModal from '../HomePageModals/CreateChannel/CreateChannel'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 import DeleteChannelModal from '../HomePageModals/DeleteChannel/DeleteChannel'
 import { Link, useHistory } from 'react-router-dom'
 import EditChannelModal from '../HomePageModals/EditChannel/EditChannel'
@@ -36,8 +36,8 @@ function SideBar({ channels }) {
                 <div>{channel.name}</div>
               </div>
               <div>
-                <OpenModalButton className={'channel-edit-button'} buttonText='Edit' modalComponent={<EditChannelModal channelId={channel.id} activeId={activeId}/>}/>
-                <OpenModalButton className={'channel-delete-button'} buttonText='X' modalComponent={<DeleteChannelModal channelId={channel.id} activeId={activeId}/>}/>
+                <OpenModalButton className={'channel-edit-button'} icon={faPen}  modalComponent={<EditChannelModal channelId={channel.id} activeId={activeId}/>}/>
+                <OpenModalButton className={'channel-delete-button'} icon={faTrash} modalComponent={<DeleteChannelModal channelId={channel.id} activeId={activeId}/>}/>
               </div>
             </div>
           ))}
