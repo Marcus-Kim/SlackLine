@@ -44,6 +44,7 @@
   padding-left: 10px;
   font-size: large;
   caret-color: white;
+  color: rgb(194,195,197);
 }
 
 .create-channel-input-field:focus {
@@ -80,4 +81,12 @@
 .description-description {
   color: rgb(147,147,150);
   font-size: 13px;
+}
+
+.create-channel-modal-exit {
+  cursor: pointer;
+}
+
+.create-channel-modal-exit-button:hover {
+  color: red;
 }

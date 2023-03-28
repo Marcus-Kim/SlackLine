@@ -4,6 +4,8 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import './UserNavigation.css'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -39,8 +41,8 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+      <button className="profile-icon" onClick={openMenu}>
+        <i className="fa-solid fa-user" style={{ color: "#cccdce" }}></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (

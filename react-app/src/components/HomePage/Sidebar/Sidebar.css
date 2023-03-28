@@ -65,6 +65,17 @@
 .channel-edit-button,
 .channel-delete-button {
   visibility: hidden;
+  color: rgb(204,205,206);
+  background-color: transparent;
+  border: none
+}
+
+.channel-delete-button:hover {
+  color: red;
+}
+
+.channel-edit-button:hover {
+  color: yellow;
 }
 
 .add-channel-button {

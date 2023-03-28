@@ -54,3 +54,12 @@
   background-color: #703578;
   cursor: pointer;
 }
+
+.demo-login-button {
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+  padding-top: 5px;
+}
