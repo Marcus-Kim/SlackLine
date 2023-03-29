@@ -28,4 +28,5 @@ class Channel(db.Model):
             'name': self.name,
             'description': self.description,
             'created_at': self.created_at,
+            'messages': [message.to_dict() for message in self.messages]
         }

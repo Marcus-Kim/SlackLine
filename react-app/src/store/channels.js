@@ -60,7 +60,7 @@ export const thunkCreateChannel = (channelDetails) => async (dispatch) => {
 
   if (response.ok) {
     const data = await response.json();
-    console.log(data)
+    if (data.errors) return data;
     await dispatch(actionCreateChannel(data));
     return data;
   }
@@ -72,7 +72,9 @@ export const thunkDeleteChannel = (channelId) => async (dispatch) => {
   });
 
   if (response.ok) {
+    const data = await response.json();
     dispatch(actionDeleteChannel(+channelId));
+    return data;
   }
 }
 
@@ -98,29 +100,44 @@ const initialState = { allChannels: {}, singleChannel: {} }
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_CHANNELS: {
-      const newState = { ...state };
+      const newState = {
+        allChannels: { ...state.allChannels },
+        singleChannel: { ...state.singleChannel }
+      };
       action.payload.channels.forEach(channel => {
         newState.allChannels[channel.id] = channel
       });
       return newState;
     }
     case GET_SINGLE_CHANNEL: {
-      const newState = { ...state };
+      const newState = {
+        allChannels: { ...state.allChannels },
+        singleChannel: { ...state.singleChannel }
+      };
       newState.singleChannel = action.payload;
       return newState;
     }
     case CREATE_CHANNEL: {
-      const newState = { ...state };
+      const newState = {
+        allChannels: { ...state.allChannels },
+        singleChannel: { ...state.singleChannel }
+      };
       newState.allChannels[action.payload.id] = action.payload
       return newState;
     }
     case EDIT_CHANNEL: {
-      const newState = { ...state };
+      const newState = {
+        allChannels: { ...state.allChannels },
+        singleChannel: { ...state.singleChannel }
+      };
       newState.allChannels[action.payload.id] = action.payload;
       return newState;
     }
     case DELETE_CHANNEL: {
-      const newState = { ...state }
+      const newState = {
+        allChannels: { ...state.allChannels },
+        singleChannel: { ...state.singleChannel }
+      };
       delete newState.allChannels[action.id]
       return newState;
     }

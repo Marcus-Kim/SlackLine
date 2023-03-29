@@ -17,6 +17,7 @@
   font-weight: bold;
   font-size: 25px;
   padding: 45px;
+  cursor: pointer;
 }
 
 .login-page-title {
@@ -36,6 +37,12 @@
   margin-bottom: 20px;
   border-radius: 5px;
   border: 1px gray solid;
+}
+
+.login-page-email-input:focus,
+.login-page-password-input:focus {
+  outline: none;
+  border: 1px solid rgb(6, 126, 163);
 }
 
 .login-page-continue-button {

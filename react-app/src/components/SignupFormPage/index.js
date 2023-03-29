@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { signUp } from "../../store/session";
 import './SignupForm.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import errorTriangle from './triangle-exclamation-solid.svg'
 
 function SignupFormPage() {
   const dispatch = useDispatch();
@@ -12,7 +14,7 @@ function SignupFormPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
-
+  const history = useHistory();
   if (sessionUser) return <Redirect to="/" />;
 
   const handleSubmit = async (e) => {
@@ -23,56 +25,60 @@ function SignupFormPage() {
           setErrors(data)
         }
     } else {
-        setErrors(['Confirm Password field must be the same as the Password field']);
+        setErrors(['Passwords must match']);
     }
   };
 
+  const logoClick = (e) => {
+    e.preventDefault();
+
+    history.push('/')
+  }
+
   return (
-    <>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+    <div className="signup-page-container">
+      <div className="login-page-logo" onClick={e => logoClick(e)}>SlackLine</div>
+      <div className="signup-page-title">Sign Up for SlackLine</div>
+      <div className="signup-page-description">We recommend using the email you use at work</div>
+      <form onSubmit={handleSubmit} className="signup-page-form-container">
+        <ul className="signup-errors-list">
+          {errors.map((error, idx) => <li className="signup-error" key={idx}><img className="error-triangle" src={errorTriangle}/>{ error.split('').includes(':') ? <div>{error.split(':')[1]}</div> : error}</li>)}
         </ul>
-        <label>
-          Email
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            placeholder="Email"
+            className="signup-page-input"
           />
-        </label>
-        <label>
-          Username
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            placeholder="Username"
+            className="signup-page-input"
           />
-        </label>
-        <label>
-          Password
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            placeholder="Password"
+            className="signup-page-input"
           />
-        </label>
-        <label>
-          Confirm Password
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            placeholder="Confirm Password"
+            className="signup-page-input"
           />
-        </label>
-        <button type="submit">Sign Up</button>
+        <button type="submit" className="signup-page-continue-button">Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 

@@ -3,6 +3,8 @@ import './EditChannel.css'
 import { useState } from 'react';
 import { thunkEditChannel } from '../../../../store/channels';
 import { useModal } from '../../../../context/Modal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 function EditChannelModal({ channelId, activeId}) {
   const channel = useSelector(state => state.channels.allChannels[channelId])
@@ -26,14 +28,22 @@ function EditChannelModal({ channelId, activeId}) {
 
   return (
     <div className="edit-channel-modal-container">
-      <div className='edit-channel-modal-header'>
-        <div className='edit-channel-modal-title'>EDIT CHANNEL "{channel.name}"</div>
-        <div className='edit-channel-modal-exit'>X</div>
+      <div className='edit-channel-modal-title-exit'>
+        <div className='edit-channel-modal-title'>Edit "{channel.name}"</div>
+        <div className="create-channel-modal-exit" onClick={closeModal}>
+          <FontAwesomeIcon className="create-channel-modal-exit-button" icon={faXmark} />
+        </div>
       </div>
       <form className='edit-channel-modal-form-container' onSubmit={e => handleSubmit(e)}>
-        <input value={name} onChange={e => setName(e.target.value)} placeholder={'Name'}/>
-        <input value={description} onChange={e => setDescription(e.target.value)} placeholder={'Description'}/>
-        <button type='submit'>Confirm</button>
+        <div className='edit-channel-modal-input-container'>
+          <label className='edit-channel-modal-input-label'>Channel Name</label>
+          <input className='edit-channel-modal-input' value={name} onChange={e => setName(e.target.value)} placeholder={'Name'}/>
+        </div>
+        <div className='edit-channel-modal-input-container'>
+          <label className='edit-channel-modal-input-label'>Description</label>
+          <input className='edit-channel-modal-input' value={description} onChange={e => setDescription(e.target.value)} placeholder={'Description'}/>
+        </div>
+        <button className='edit-channel-modal-button' type='submit'>Confirm</button>
       </form>
     </div>
   )

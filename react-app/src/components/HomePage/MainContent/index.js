@@ -7,20 +7,29 @@ import { actionCreateChannelMessage } from '../../../store/messages';
 import DeleteMessageModal from '../HomePageModals/DeleteMessage/DeleteMessageModal';
 import OpenModalButton from '../../OpenModalButton';
 import EditMessageModal from '../HomePageModals/EditMessage/EditMessageModal';
+import { thunkGetAllChannels } from '../../../store/channels';
 
 let socket;
 
-function MainContent({ selectedChannel }) {
+function MainContent({ selectedChannel, channels }) {
   // const messages = useSelector(state => Object.values(state.messages.channelMessages[selectedChannel.id]))
+
   const messages = useSelector(state => state.messages.channelMessages)
-  console.log(messages)
+  const messagesArray = Object.values(messages)
   const user = useSelector(state => state.session.user);
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
 
+  console.log("MESSAGES ARRAY: ", (selectedChannel.messages))
   useEffect(() => {
-    dispatch(thunkGetAllChannelIdMessages(selectedChannel.id))
-  }, [dispatch, selectedChannel.id])
+    console.log('RERENDERING')
+    const fetchData = async () => {
+      await dispatch(thunkGetAllChannels())
+      await dispatch(thunkGetAllChannelIdMessages(selectedChannel.id))
+    }
+
+    fetchData()
+  }, [dispatch, selectedChannel.id, messagesArray[selectedChannel.id]])
 
   useEffect(() => {
 
