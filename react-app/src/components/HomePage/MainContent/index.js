@@ -13,14 +13,11 @@ let socket;
 
 function MainContent({ selectedChannel, channels }) {
   // const messages = useSelector(state => Object.values(state.messages.channelMessages[selectedChannel.id]))
-
   const messages = useSelector(state => state.messages.channelMessages)
-  const messagesArray = Object.values(messages)
   const user = useSelector(state => state.session.user);
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
 
-  console.log("MESSAGES ARRAY: ", (selectedChannel.messages))
   useEffect(() => {
     console.log('RERENDERING')
     const fetchData = async () => {
@@ -29,7 +26,7 @@ function MainContent({ selectedChannel, channels }) {
     }
 
     fetchData()
-  }, [dispatch, selectedChannel.id, messagesArray[selectedChannel.id]])
+  }, [dispatch, selectedChannel.id])
 
   useEffect(() => {
 

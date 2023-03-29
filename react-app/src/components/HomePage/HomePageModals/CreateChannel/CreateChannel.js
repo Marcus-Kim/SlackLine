@@ -36,7 +36,6 @@ function CreateChannelModal() {
 
     if (data.id) {
       dispatch(thunkGetAllChannelIdMessages(data.id))
-      console.log('CREATED CHANNEL: ', data.id)
       history.push(`/home/channel/${data.id}`)
     }
 
