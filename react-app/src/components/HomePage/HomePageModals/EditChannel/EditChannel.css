@@ -4,5 +4,59 @@
   color: rgb(204,205,206);
   display: flex;
   flex-direction: column;
-  height: 435px;
+  height: 315px;
+}
+
+.edit-channel-modal-title-exit {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.edit-channel-modal-title {
+  font-size: 30px;
+  font-weight: bolder;
+}
+
+.edit-channel-modal-form-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.edit-channel-modal-input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-channel-modal-input {
+  background-color: rgb(26,29,33);
+  border: 1px solid rgba(204, 205, 206, 0.37);
+  height: 42px;
+  border-radius: 4px;
+  padding-left: 10px;
+  font-size: large;
+  caret-color: white;
+  color: rgb(194,195,197);
+}
+
+.edit-channel-modal-input-label {
+  font-size: small;
+  padding-bottom: 5px;
+}
+
+.edit-channel-modal-button {
+  background-color: rgb(0,122,90);
+  color: white;
+  border: none;
+  height: 35px;
+  font-weight: 700;
+  border-radius: 4px;
+  width: 70px;
+  align-self: flex-end;
+}
+
+.edit-channel-modal-button:hover {
+  background-color: rgb(20,133,103);
+  cursor: pointer;
 }

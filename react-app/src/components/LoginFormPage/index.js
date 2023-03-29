@@ -3,6 +3,8 @@ import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import './LoginForm.css';
+import { useHistory } from "react-router-dom";
+import errorTriangle from '../SignupFormPage/triangle-exclamation-solid.svg'
 
 function LoginFormPage() {
   const dispatch = useDispatch();
@@ -10,7 +12,7 @@ function LoginFormPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
-
+  const history = useHistory();
   if (sessionUser) return <Redirect to="/" />;
 
   const handleSubmit = async (e) => {
@@ -27,16 +29,20 @@ function LoginFormPage() {
     dispatch(login('demo@aa.io', 'password'))
   }
 
+  const logoClick = (e) => {
+    e.preventDefault();
+
+    history.push('/')
+  }
+
   return (
     <div className="login-page-container">
-      <div className="login-page-logo">SlackLine</div>
+      <div className="login-page-logo" onClick={e => logoClick(e)}>SlackLine</div>
       <div className="login-page-title">First, enter your email</div>
       <div className="login-page-title-description">We suggest using the email address you use at work</div>
       <form className="login-page-form" onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
+        <ul className="signup-errors-list">
+          {errors.map((error, idx) => <li className="signup-error" key={idx}><img className="error-triangle" src={errorTriangle}/>{ error.split('').includes(':') ? <div>{error.split(':')[1]}</div> : error}</li>)}
         </ul>
           <input
             type="text"

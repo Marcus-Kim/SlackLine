@@ -38,7 +38,7 @@ function HomePage() {
               </Route>
               {channels.map((channel) => (
                 <Route key={channel.id} path={`/home/channel/${channel.id}`}>
-                  <MainContent selectedChannel={channel} />
+                  <MainContent selectedChannel={channel} channels={channels}/>
                 </Route>
               ))}
             </Switch>

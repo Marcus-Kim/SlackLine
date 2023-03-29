@@ -1,6 +1,6 @@
 .home-sidebar-container {
   width: 17%;
-  /* min-width: 200px; */
+  min-width: 230px;
   border-right: 1px solid #2c2f34;
   height: calc(100vh - 45px);
   background-color: rgb(25,23,29);
