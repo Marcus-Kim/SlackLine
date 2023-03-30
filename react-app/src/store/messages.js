@@ -99,7 +99,11 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_ALL_MESSAGES: {
-      const newState = { ...state };
+      const newState = {
+        channelMessages: { ...state.channelMessages },
+        directMessages: { ...state.directMessages },
+        groupDirectMessages: { ...state.groupDirectMessages }
+      };
       action.payload.forEach(message => {
         const channelId = message.channel_id;
         if (!newState.channelMessages[channelId]) {
@@ -110,26 +114,42 @@ export default function reducer(state = initialState, action) {
       return newState;
     }
     case CREATE_CHANNEL_MESSAGE: {
-      const newState = { ...state };
+      const newState = {
+        channelMessages: { ...state.channelMessages },
+        directMessages: { ...state.directMessages },
+        groupDirectMessages: { ...state.groupDirectMessages }
+      };
       if (!newState.channelMessages[action.payload.channel_id]) newState.channelMessages[action.payload.channel_id] = {};
       newState.channelMessages[action.payload.channel_id][action.payload.id] = action.payload
       return newState;
     }
     case GET_CHANNELID_MESSAGES: {
-      const newState = { ...state };
+      const newState = {
+        channelMessages: { ...state.channelMessages },
+        directMessages: { ...state.directMessages },
+        groupDirectMessages: { ...state.groupDirectMessages }
+      };
       action.payload.messages.forEach(message => {
         newState.channelMessages[action.payload.channelId][message.id] = message
       })
       return newState;
     }
     case EDIT_MESSAGE: {
-      const newState = { ...state }
+      const newState = {
+        channelMessages: { ...state.channelMessages },
+        directMessages: { ...state.directMessages },
+        groupDirectMessages: { ...state.groupDirectMessages }
+      };
       console.log("ACTION PAYLOAD: ", action.payload)
       newState.channelMessages[action.payload.channel_id][action.payload.id] = action.payload
       return newState;
     }
     case DELETE_CHANNEL_MESSAGE: {
-      const newState = { ...state };
+      const newState = {
+        channelMessages: { ...state.channelMessages },
+        directMessages: { ...state.directMessages },
+        groupDirectMessages: { ...state.groupDirectMessages }
+      };
       delete newState.channelMessages[action.payload.channelId][action.payload.messageId]
       return newState;
     }

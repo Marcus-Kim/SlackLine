@@ -7,26 +7,24 @@ import { actionCreateChannelMessage } from '../../../store/messages';
 import DeleteMessageModal from '../HomePageModals/DeleteMessage/DeleteMessageModal';
 import OpenModalButton from '../../OpenModalButton';
 import EditMessageModal from '../HomePageModals/EditMessage/EditMessageModal';
-import { thunkGetAllChannels } from '../../../store/channels';
+import { useParams } from 'react-router-dom';
 
 let socket;
 
-function MainContent({ selectedChannel, channels }) {
-  // const messages = useSelector(state => Object.values(state.messages.channelMessages[selectedChannel.id]))
+function MainContent() {
+  const { channelId } = useParams();
+  const channels = useSelector(state => Object.values(state.channels.allChannels));
+  const selectedChannel = channels.find((channel) => channel.id === parseInt(channelId));
   const messages = useSelector(state => state.messages.channelMessages)
   const user = useSelector(state => state.session.user);
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('RERENDERING')
-    const fetchData = async () => {
-      await dispatch(thunkGetAllChannels())
-      await dispatch(thunkGetAllChannelIdMessages(selectedChannel.id))
+    if (selectedChannel) {
+      dispatch(thunkGetAllChannelIdMessages(selectedChannel.id))
     }
-
-    fetchData()
-  }, [dispatch, selectedChannel.id])
+  }, [dispatch, channelId, selectedChannel])
 
   useEffect(() => {
 
@@ -61,10 +59,6 @@ function MainContent({ selectedChannel, channels }) {
     }
 
     socket.emit('channel_message', newMessage)
-
-    // const response = await dispatch(thunkCreateChannelMessage(selectedChannel.id, newMessage))
-
-    // if (response) setMessage('');
     setMessage('')
   }
 
@@ -80,12 +74,12 @@ function MainContent({ selectedChannel, channels }) {
       <div className='home-content-header-container'><span className='main-hashtag'>#</span>{selectedChannel.name}</div>
       <div className='home-content-messages-container'>
         {messages[selectedChannel.id] ? Object.values(messages[selectedChannel.id]).map(message => (
-          <div className='message-container-container'>
+          <div key={message.id} className='message-container-container'>
             <div className='message-container'>
               <div className='message-username'>{message.username}</div>
               <div className='message-body'>{message.body}</div>
             </div>
-            {user.id == message.user_id && (
+            {user.id === message.user_id && (
               <div className='message-edit-delete-buttons'>
                 <OpenModalButton buttonText={'Delete'} modalComponent={<DeleteMessageModal channelId={selectedChannel.id} messageId={message.id} socket={socket}/>}/>
                 <OpenModalButton buttonText={'Edit'} modalComponent={<EditMessageModal messageId={message.id} messageBody={message.body} socket={socket}/>}/>
@@ -105,11 +99,12 @@ function MainContent({ selectedChannel, channels }) {
           value={message}
           onChange={e => setMessage(e.target.value)}
           onKeyDown={e => handleKeyDown(e)}
+          maxLength={400}
         />
         <button
           type='submit'
           className='message-form-submit-button'
-          disabled={message.length == 0}>
+          disabled={message.length === 0}>
             Send
         </button>
       </form>

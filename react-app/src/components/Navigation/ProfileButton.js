@@ -4,7 +4,6 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './UserNavigation.css'
 
 function ProfileButton({ user }) {

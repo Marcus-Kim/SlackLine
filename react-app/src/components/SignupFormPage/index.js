@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { signUp } from "../../store/session";
 import './SignupForm.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import errorTriangle from './triangle-exclamation-solid.svg'
 
 function SignupFormPage() {
@@ -42,7 +41,7 @@ function SignupFormPage() {
       <div className="signup-page-description">We recommend using the email you use at work</div>
       <form onSubmit={handleSubmit} className="signup-page-form-container">
         <ul className="signup-errors-list">
-          {errors.map((error, idx) => <li className="signup-error" key={idx}><img className="error-triangle" src={errorTriangle}/>{ error.split('').includes(':') ? <div>{error.split(':')[1]}</div> : error}</li>)}
+          {errors.map((error, idx) => <li className="signup-error" key={idx}><img className="error-triangle" src={errorTriangle} alt={'error triangle'}/>{ error.split('').includes(':') ? <div>{error.split(':')[1]}</div> : error}</li>)}
         </ul>
           <input
             type="text"

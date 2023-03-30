@@ -29,12 +29,15 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
-          <Route path={'/home'}>
+          <Route path={'/home/channel/:channelId'}>
             {sessionUser ? <HomePage /> : <Redirect to={'/'} />}
+          </Route>
+          <Route path="/home">
+            {sessionUser ? <Redirect to={"/home/channel/1"} /> : <Redirect to={"/"} />}
           </Route>
           <Route exact path="/">
             <Navigation isLoaded={isLoaded} />
-            {sessionUser ? <Redirect to={"/home"} /> : <SplashPage />}
+            {sessionUser ? <Redirect to={"/home/channel/1"} /> : <SplashPage />}
           </Route>
         </Switch>
       )}

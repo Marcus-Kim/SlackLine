@@ -64,10 +64,10 @@ def edit_channel(channelId):
     other_channels_with_same_name = Channel.query.filter(
         Channel.name == new_name,
         Channel.id != channelId
-    ).all()
+    ).first()
 
-    if other_channels_with_same_name:
-        return {'message': 'Name already taken'}
+    if other_channels_with_same_name is not None:
+        return {'errors': ['Name already taken']}
 
     # Update the channel name
     channel.name = new_name
@@ -118,5 +118,5 @@ def get_channel_messages_by_id(channelId):
 @login_required
 def delete_channel_message(channelId, messageId):
     message = Message.query.filter_by(channelId=channelId, id=messageId)
-    
+
     print(message.to_dict())

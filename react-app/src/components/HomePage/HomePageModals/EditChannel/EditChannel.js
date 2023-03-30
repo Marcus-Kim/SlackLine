@@ -12,6 +12,7 @@ function EditChannelModal({ channelId, activeId}) {
   const [description, setDescription] = useState(channel.description);
   const dispatch = useDispatch()
   const { closeModal } = useModal();
+  const [errors, setErrors] = useState([])
 
 
   const handleSubmit = async (e) => {
@@ -21,8 +22,14 @@ function EditChannelModal({ channelId, activeId}) {
       description: description
     }
 
-    await dispatch(thunkEditChannel(channelId, newChannelData))
-      .then(closeModal())
+    const data = await dispatch(thunkEditChannel(channelId, newChannelData))
+
+    if (data.errors) {
+      setErrors(data.errors);
+      return;
+    }
+
+    closeModal()
   }
 
 
@@ -34,6 +41,11 @@ function EditChannelModal({ channelId, activeId}) {
           <FontAwesomeIcon className="create-channel-modal-exit-button" icon={faXmark} />
         </div>
       </div>
+      <ul>
+        {errors.map((error, idx) => (
+          <li key={idx}>{error}</li>
+        ))}
+      </ul>
       <form className='edit-channel-modal-form-container' onSubmit={e => handleSubmit(e)}>
         <div className='edit-channel-modal-input-container'>
           <label className='edit-channel-modal-input-label'>Channel Name</label>

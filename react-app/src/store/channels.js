@@ -88,6 +88,7 @@ export const thunkEditChannel = (channelId, channel) => async (dispatch) => {
 
   if (response.ok) {
     const data = await response.json();
+    if (data.errors) return data;
     dispatch(actionEditChannel(data))
     return data;
   }
