@@ -2,7 +2,7 @@ import './DeleteChannel.css'
 import { thunkDeleteChannel } from '../../../../store/channels'
 import { useModal } from '../../../../context/Modal'
 import { useDispatch } from 'react-redux'
-import { Redirect, useHistory, useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
@@ -16,9 +16,9 @@ function DeleteChannelModal({ channelId, activeId }) {
   const handleClick = async (e) => {
 
     await dispatch(thunkDeleteChannel(channelId))
-
-    if (channelId == activeId) {
+    if (channelId === activeId || (!activeId)) {
       history.push('/home/channel/1')
+      history.go(0)
     }
 
     closeModal();

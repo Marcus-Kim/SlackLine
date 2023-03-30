@@ -42,7 +42,7 @@ function LoginFormPage() {
       <div className="login-page-title-description">We suggest using the email address you use at work</div>
       <form className="login-page-form" onSubmit={handleSubmit}>
         <ul className="signup-errors-list">
-          {errors.map((error, idx) => <li className="signup-error" key={idx}><img className="error-triangle" src={errorTriangle}/>{ error.split('').includes(':') ? <div>{error.split(':')[1]}</div> : error}</li>)}
+          {errors.map((error, idx) => <li className="signup-error" key={idx}><img className="error-triangle" src={errorTriangle} alt={"error triangle"}/>{ error.split('').includes(':') ? <div>{error.split(':')[1]}</div> : error}</li>)}
         </ul>
           <input
             type="text"

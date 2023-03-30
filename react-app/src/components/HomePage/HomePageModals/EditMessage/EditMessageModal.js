@@ -1,15 +1,12 @@
 import { useState } from "react";
 import "./EditMessageModal.css";
 import { useModal } from "../../../../context/Modal";
-import { useDispatch } from "react-redux";
-// import your thunk function for updating the message here
 
 function EditMessageModal({ messageId, messageBody, socket }) {
   const [newMessage, setNewMessage] = useState(messageBody);
   const [errors, setErrors] = useState([]);
 
   const { closeModal } = useModal();
-  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

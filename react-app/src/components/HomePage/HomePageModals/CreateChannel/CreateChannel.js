@@ -6,11 +6,9 @@ import { useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
-import { thunkGetAllChannels } from "../../../../store/channels"
-import { thunkGetAllChannelIdMessages } from "../../../../store/messages"
 
 
-function CreateChannelModal() {
+function CreateChannelModal({ setActiveId }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [errors, setErrors] = useState([]);
@@ -35,8 +33,9 @@ function CreateChannelModal() {
     }
 
     if (data.id) {
-      dispatch(thunkGetAllChannelIdMessages(data.id))
-      history.push(`/home/channel/${data.id}`)
+      setActiveId(data.id);
+      history.push(`/home/channel/${data.id}`);
+      history.go(0);
     }
 
     setErrors([]);

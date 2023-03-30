@@ -13,5 +13,5 @@ class ChannelCreateForm(FlaskForm):
     description = TextAreaField('Description', validators=[Length(max=500)])
 
 class ChannelEditForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(max=100)])
+    name = StringField('Name', validators=[DataRequired(), Length(max=100), unique_channel_name])
     description = TextAreaField('Description', validators=[Length(max=500)])

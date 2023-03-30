@@ -1,24 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
-	const sessionUser = useSelector(state => state.session.user);
-
 
 	return (
 		<div className='splash-nav-container'>
-			{/* <ul>
-				<li>
-					<NavLink exact to="/">Home</NavLink>
-				</li>
-				{isLoaded && (
-					<li>
-						<ProfileButton user={sessionUser} />
-					</li>
-				)}
-			</ul> */}
 			<div className='splash-nav-content'>
 				<NavLink exact to="/" className={'splash-nav-home-button'}>SlackLine</NavLink>
 				<div className='splash-nav-login-signup'>

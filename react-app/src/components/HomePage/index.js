@@ -4,13 +4,15 @@ import MainContent from './MainContent';
 import './HomePage.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { thunkGetAllChannels, thunkGetMessagesForChannel } from '../../store/channels';
+import { thunkGetAllChannels } from '../../store/channels';
 import { thunkGetAllMessages } from "../../store/messages";
+import { useParams } from "react-router-dom";
 
 function HomePage() {
   const channels = useSelector((state) => Object.values(state.channels.allChannels));
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const { channelId } = useParams();
 
   useEffect(() => {
     const fetchChannels = async () => {
@@ -34,13 +36,11 @@ function HomePage() {
             <SideBar channels={channels} />
             <Switch>
               <Route exact path="/home">
-                <MainContent selectedChannel={channels[0]}/>
+                <MainContent key={channelId} />
               </Route>
-              {channels.map((channel) => (
-                <Route key={channel.id} path={`/home/channel/${channel.id}`}>
-                  <MainContent selectedChannel={channel} channels={channels}/>
-                </Route>
-              ))}
+              <Route path={`/home/channel/:channelId`}>
+                <MainContent key={channelId} />
+              </Route>
             </Switch>
           </>
         )}

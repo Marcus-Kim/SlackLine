@@ -1,20 +1,17 @@
 import './Sidebar.css'
 import OpenModalButton from '../../OpenModalButton'
 import CreateChannelModal from '../HomePageModals/CreateChannel/CreateChannel'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import DeleteChannelModal from '../HomePageModals/DeleteChannel/DeleteChannel'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import EditChannelModal from '../HomePageModals/EditChannel/EditChannel'
-import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 
 
 function SideBar({ channels }) {
   const history = useHistory()
-
   const [activeId, setActiveId] = useState(null);
-
+  
   return (
     <div className='home-sidebar-container'>
         <div className='home-sidebar-heading-container'>
@@ -24,7 +21,7 @@ function SideBar({ channels }) {
         <div className='home-sidebar-content'>
           <div className='home-sidebar-channels-header'>
             <div className='home-sidebar-channels-header-title'>Channels</div>
-            <OpenModalButton className={'add-channel-button'} buttonText={'+'} modalComponent={<CreateChannelModal />}/>
+            <OpenModalButton className={'add-channel-button'} buttonText={'+'} modalComponent={<CreateChannelModal setActiveId={setActiveId} />}/>
           </div>
           {channels.map(channel => (
             <div onClick={(e) => {
@@ -37,7 +34,7 @@ function SideBar({ channels }) {
               </div>
               <div>
                 <OpenModalButton className={'channel-edit-button'} icon={faPen}  modalComponent={<EditChannelModal channelId={channel.id} activeId={activeId}/>}/>
-                <OpenModalButton className={'channel-delete-button'} icon={faTrash} modalComponent={<DeleteChannelModal channelId={channel.id} activeId={activeId}/>}/>
+                <OpenModalButton className={'channel-delete-button'} icon={faTrash} modalComponent={<DeleteChannelModal channelId={channel.id} activeId={activeId} setActiveId={setActiveId}/>}/>
               </div>
             </div>
           ))}
