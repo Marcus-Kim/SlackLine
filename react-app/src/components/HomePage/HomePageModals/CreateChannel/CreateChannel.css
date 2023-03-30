@@ -89,4 +89,5 @@
 
 .create-channel-modal-exit-button:hover {
   color: red;
+  cursor: pointer;
 }

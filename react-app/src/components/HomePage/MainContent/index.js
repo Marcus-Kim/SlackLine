@@ -8,6 +8,8 @@ import DeleteMessageModal from '../HomePageModals/DeleteMessage/DeleteMessageMod
 import OpenModalButton from '../../OpenModalButton';
 import EditMessageModal from '../HomePageModals/EditMessage/EditMessageModal';
 import { useParams } from 'react-router-dom';
+import { faPaperPlane, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 let socket;
 
@@ -81,8 +83,8 @@ function MainContent() {
             </div>
             {user.id === message.user_id && (
               <div className='message-edit-delete-buttons'>
-                <OpenModalButton buttonText={'Delete'} modalComponent={<DeleteMessageModal channelId={selectedChannel.id} messageId={message.id} socket={socket}/>}/>
-                <OpenModalButton buttonText={'Edit'} modalComponent={<EditMessageModal messageId={message.id} messageBody={message.body} socket={socket}/>}/>
+                <OpenModalButton className={'message-edit-button'} icon={faPen} modalComponent={<EditMessageModal messageId={message.id} messageBody={message.body} socket={socket}/>}/>
+                <OpenModalButton className={'message-delete-button'} icon={faTrash} modalComponent={<DeleteMessageModal channelId={selectedChannel.id} messageId={message.id} socket={socket}/>}/>
               </div>
             )}
           </div>
@@ -103,9 +105,9 @@ function MainContent() {
         />
         <button
           type='submit'
-          className='message-form-submit-button'
+          className={`message-form-submit-button ${message.length !== 0 ? 'green' : ''}`}
           disabled={message.length === 0}>
-            Send
+            <FontAwesomeIcon icon={faPaperPlane}/>
         </button>
       </form>
     </div>

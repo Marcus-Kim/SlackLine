@@ -90,7 +90,7 @@
   border-radius: 10px;
 }
 
-.message-form-submit-button:hover {
+.message-form-submit-button.green {
   cursor: pointer;
   background-color: green;
   color: rgb(255,255,255)
@@ -105,8 +105,25 @@
   visibility: hidden;
 }
 
-.message-container-container:hover .message-edit-delete-buttons {
+.message-container-container:hover .message-edit-button {
   visibility: visible;
 }
 
+.message-container-container:hover .message-delete-button {
+  visibility: visible;
+}
 
+.message-edit-button,
+.message-delete-button {
+  color: rgb(204,205,206);
+  background-color: transparent;
+  border: none
+}
+
+.message-delete-button:hover {
+  color: red;
+}
+
+.message-edit-button:hover {
+  color: yellow;
+}

@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./EditMessageModal.css";
 import { useModal } from "../../../../context/Modal";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
+
 
 function EditMessageModal({ messageId, messageBody, socket }) {
   const [newMessage, setNewMessage] = useState(messageBody);
@@ -21,7 +24,7 @@ function EditMessageModal({ messageId, messageBody, socket }) {
     <div className="edit-message-modal-container">
       <div className="edit-message-modal-title-exit">
         <div className="edit-message-modal-title">Edit Message</div>
-        <div className="edit-message-modal-exit" onClick={closeModal}>X</div>
+        <FontAwesomeIcon onClick={closeModal} className="create-channel-modal-exit-button" icon={faXmark} />
       </div>
       <ul>
         {errors.map((error, idx) => (
