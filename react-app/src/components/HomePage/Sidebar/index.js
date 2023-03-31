@@ -6,11 +6,13 @@ import DeleteChannelModal from '../HomePageModals/DeleteChannel/DeleteChannel'
 import { useHistory } from 'react-router-dom'
 import EditChannelModal from '../HomePageModals/EditChannel/EditChannel'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
-
-function SideBar({ channels }) {
+function SideBar({ channels, directMessages }) {
   const history = useHistory()
   const [activeId, setActiveId] = useState(null);
+  const user = useSelector((state) => state.session.user);
+  const userdms = directMessages.filter(dm => dm.users.includes(user.id))
 
   return (
     <div className='home-sidebar-container'>
@@ -38,6 +40,24 @@ function SideBar({ channels }) {
               </div>
             </div>
           ))}
+          <div className='home-sidebar-channels-header'>
+          <div className='home-sidebar-channels-header-title'>Direct Messages</div>
+          </div>
+          {userdms.map(directMessage => {
+
+
+            return (
+              <div
+                key={directMessage.id}
+                className='home-sidebar-channel'
+                onClick={(e) => history.push(`/home/dm/${directMessage.id}`)}
+              >
+                <div className='home-sidebar-channel-name'>
+                  <div>{directMessage.user2.username}</div>
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
   )

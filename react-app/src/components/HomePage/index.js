@@ -6,11 +6,13 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetAllChannels } from '../../store/channels';
 import { thunkGetAllMessages } from "../../store/messages";
+import { thunkGetAllDMS } from "../../store/directMessages";
 import { useParams } from "react-router-dom";
+import MainContentDirect from "./MainContentDirect";
 
 function HomePage() {
   const channels = useSelector((state) => Object.values(state.channels.allChannels));
-  const user = useSelector((state) => state.session.user);
+  const dms = useSelector(state => Object.values(state.directMessages.dms))
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const { channelId } = useParams();
@@ -19,6 +21,7 @@ function HomePage() {
     const fetchChannels = async () => {
       await dispatch(thunkGetAllChannels());
       await dispatch(thunkGetAllMessages());
+      await dispatch(thunkGetAllDMS());
       setLoading(false);
     };
 
@@ -26,6 +29,7 @@ function HomePage() {
   }, [dispatch, channels.length]);
 
   if (!channels.length) return null;
+  if (!dms.length) return null;
 
   return (
     <Router>
@@ -34,13 +38,19 @@ function HomePage() {
           <div>Loading...</div>
         ) : (
           <>
-            <SideBar channels={channels} />
+            <SideBar channels={channels} directMessages={dms}/>
             <Switch>
               <Route exact path="/home">
                 <MainContent key={channelId} />
               </Route>
               <Route path={`/home/channel/:channelId`}>
                 <MainContent key={channelId} />
+              </Route>
+              <Route path={`/home/dm/:dmId`}>
+                <MainContentDirect type='direct' />
+              </Route>
+              <Route path={`/home/gdm/:gdmId`}>
+                <MainContentDirect type='group' />
               </Route>
             </Switch>
           </>
