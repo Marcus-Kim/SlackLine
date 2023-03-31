@@ -26,7 +26,7 @@ const actionGetSingleChannel = (channel) => ({
   payload: channel
 })
 
-const actionEditChannel = (channel) => ({
+export const actionEditChannel = (channel) => ({
   type: EDIT_CHANNEL,
   payload: channel
 })

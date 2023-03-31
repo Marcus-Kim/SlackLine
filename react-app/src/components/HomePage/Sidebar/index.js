@@ -11,7 +11,7 @@ import { useState } from 'react'
 function SideBar({ channels }) {
   const history = useHistory()
   const [activeId, setActiveId] = useState(null);
-  
+
   return (
     <div className='home-sidebar-container'>
         <div className='home-sidebar-heading-container'>

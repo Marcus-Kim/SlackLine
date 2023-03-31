@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 
 function HomePage() {
   const channels = useSelector((state) => Object.values(state.channels.allChannels));
+  const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const { channelId } = useParams();

@@ -26,11 +26,16 @@ class User(db.Model, UserMixin):
     def password(self, password):
         self.hashed_password = generate_password_hash(password)
 
+    @property
+    def get_channels(self):
+        return [channel.id for channel in self.channels]
+
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
     def to_dict(self):
         return {
             'id': self.id,
-            'email': self.email
+            'email': self.email,
+            'channels': self.get_channels
         }
