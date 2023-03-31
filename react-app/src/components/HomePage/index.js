@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetAllChannels } from '../../store/channels';
 import { thunkGetAllMessages } from "../../store/messages";
 import { thunkGetAllDMS } from "../../store/directMessages";
+import { thunkGetAllDirectMessages } from "../../store/messages";
 import { useParams } from "react-router-dom";
 import MainContentDirect from "./MainContentDirect";
 
@@ -22,6 +23,7 @@ function HomePage() {
       await dispatch(thunkGetAllChannels());
       await dispatch(thunkGetAllMessages());
       await dispatch(thunkGetAllDMS());
+      await dispatch(thunkGetAllDirectMessages())
       setLoading(false);
     };
 
