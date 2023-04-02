@@ -75,24 +75,27 @@ function MainContent() {
     <div className='home-content-container'>
       <div className='home-content-header-container'><span className='main-hashtag'>#</span>{selectedChannel.name}</div>
       <div className='home-content-messages-container'>
-        {messages[selectedChannel.id] ? Object.values(messages[selectedChannel.id]).map(message => (
-          <div key={message.id} className='message-container-container'>
-            <div className='message-container'>
-              <div className='message-username'>{message.username}</div>
-              <div className='message-body'>{message.body}</div>
-            </div>
-            {user.id === message.user_id && (
-              <div className='message-edit-delete-buttons'>
-                <OpenModalButton className={'message-edit-button'} icon={faPen} modalComponent={<EditMessageModal messageId={message.id} messageBody={message.body} socket={socket}/>}/>
-                <OpenModalButton className={'message-delete-button'} icon={faTrash} modalComponent={<DeleteMessageModal channelId={selectedChannel.id} messageId={message.id} socket={socket}/>}/>
+        <div className='messages-wrapper'>
+          {messages[selectedChannel.id] ? Object.values(messages[selectedChannel.id]).map(message => (
+            <div key={message.id} className='message-container-container'>
+              <div className='message-container'>
+                <div className='message-username'>{message.username}</div>
+                <div className='message-body'>{message.body}</div>
               </div>
-            )}
-          </div>
-        )) : (
-          <div className='message-container'>
-            <div className='message-body'>No messages yet</div>
-          </div>
-        )}
+              {user.id === message.user_id && (
+                <div className='message-edit-delete-buttons'>
+                  <OpenModalButton className={'message-edit-button'} icon={faPen} modalComponent={<EditMessageModal messageId={message.id} messageBody={message.body} socket={socket}/>}/>
+                  <OpenModalButton className={'message-delete-button'} icon={faTrash} modalComponent={<DeleteMessageModal channelId={selectedChannel.id} messageId={message.id} socket={socket}/>}/>
+                </div>
+              )}
+            </div>
+          )) : (
+            <div className='message-container'>
+              <div className='message-body'>No messages yet</div>
+            </div>
+          )}
+
+        </div>
       </div>
       <form className='message-form-container' onSubmit={e => handleSubmit(e)}>
         <textarea
