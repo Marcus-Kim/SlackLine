@@ -23,7 +23,7 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 98px - 100px);
-  overflow-y: auto;
+  overflow-y: scroll;
   padding-bottom: 20px;
   justify-content: flex-end;
 }
@@ -35,6 +35,17 @@
   padding-top: 7px;
   padding-bottom: 7px;
   width: 80%;
+  word-wrap: break-word;
+}
+
+.home-content-messages-container::-webkit-scrollbar {
+  width: 12px;
+}
+
+.home-content-messages-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  border: 2px solid #ffffff;
 }
 
 .message-container-container:hover {
