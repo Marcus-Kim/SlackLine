@@ -84,8 +84,14 @@ function SplashPage() {
               <span id='dev-name'>Marcus</span> is a full-stack software developer who is passionate about creating apps that push the boundaries of innovation and technology. SlackLine is his capstone project, and his goal was to expand his portfolio to include WebSockets. Make sure to follow him on GitHub to see the various projects he's working on!
             </div>
             <div className='splash-developer-links'>
-              <a className='dev-link' href='https://github.com/Marcus-Kim/SlackLine'><img className='github-icon' src={github} /> Project Repo</a>
-              <a className={'dev-link'} href={'https://github.com/Marcus-Kim'}><img className='github-icon' src={github} />Check out my GitHub</a>
+              <a className='dev-link' href='https://github.com/Marcus-Kim/SlackLine'>
+                <img className='github-icon' src={github} />
+                Project Repo
+              </a>
+              <a className={'dev-link'} href={'https://github.com/Marcus-Kim'}>
+                <img className='github-icon' src={github}/>
+                Check out my GitHub
+              </a>
               <a className='dev-link' href='https://www.linkedin.com/in/marcuskim1/'>
                 <img src={linkedin} className='github-icon'/>
                 Let's connect on LinkedIn
