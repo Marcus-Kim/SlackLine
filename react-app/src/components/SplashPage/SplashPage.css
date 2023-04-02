@@ -1,0 +1,35 @@
+.splash-container {
+  color: white;
+}
+
+.splash-header-container {
+  /* border: 1px solid red; */
+  height: 725px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.splash-header {
+  position: relative;
+  top: 200px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.splash-header-text {
+  font-size: 40px
+}
+
+.splash-signup-button {
+  border: 1px white solid;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  width: 175px;
+  text-align: center;
+  align-self: center;
+  border-radius: 5px;
+}

@@ -1,5 +1,5 @@
 from flask_socketio import SocketIO, join_room, leave_room, emit
-from .models import Message, db
+from .models import Message, db, channel_users, Channel
 # Create your SocketIO instance
 socketio = SocketIO(cors_allowed_origins="*")
 
