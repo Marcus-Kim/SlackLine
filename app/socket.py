@@ -1,5 +1,5 @@
 from flask_socketio import SocketIO, join_room, leave_room, emit
-from .models import Message, db
+from .models import Message, db, channel_users, Channel
 # Create your SocketIO instance
 socketio = SocketIO(cors_allowed_origins="*")
 
@@ -30,3 +30,16 @@ def handle_delete_message(message_id):
     db.session.commit()
 
     emit("message_deleted", message_id, broadcast=True)
+
+@socketio.on("join_channel")
+def handle_join_channel(join_data):
+    user_id = join_data['userId']
+    channel_id = join_data['channelId']
+
+    new_channel_user_statement = channel_users.insert().values(channel_id=channel_id, user_id=user_id)
+    result = db.session.execute(new_channel_user_statement)
+    db.session.commit()
+
+    channel = Channel.query.get(channel_id)
+
+    emit("added_user_to_channel", channel.to_dict(), broadcast=True)

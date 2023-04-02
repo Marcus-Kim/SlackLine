@@ -21,12 +21,17 @@ class Channel(db.Model):
     users = db.relationship('User', secondary=channel_users, back_populates='channels')
     messages = db.relationship('Message', back_populates='channel', cascade='all, delete')
 
+    @property
+    def get_users(self):
+        return [user.id for user in self.users]
+
     def to_dict(self):
         return {
             'id': self.id,
             'owner_id': self.owner_id,
             'name': self.name,
             'description': self.description,
-            'created_at': self.created_at,
-            'messages': [message.to_dict() for message in self.messages]
+            'created_at': self.created_at.strftime("%Y-%m-%dT%H:%M:%S"),
+            'messages': [message.to_dict() for message in self.messages],
+            'users': self.get_users
         }
