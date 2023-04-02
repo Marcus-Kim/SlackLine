@@ -16,11 +16,16 @@ class DirectMessageMessage(db.Model):
 
     user = db.relationship("User", back_populates='direct_message_messages')
 
+    @property
+    def get_username(self):
+        return self.user.username
+
     def to_dict(self):
         return {
             'id': self.id,
             'direct_message_id': self.direct_message_id,
             'user_id': self.user_id,
             'body': self.body,
-            'created_at': self.created_at.strftime('%Y-%m-%d %H:%M:%S')
+            'created_at': self.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'username': self.get_username
         }

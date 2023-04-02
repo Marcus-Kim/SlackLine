@@ -7,12 +7,14 @@ import { useHistory } from 'react-router-dom'
 import EditChannelModal from '../HomePageModals/EditChannel/EditChannel'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
+import CreateDirectMessageModal from '../HomePageModals/CreateDirectMessage/CreateDirectMessage'
 
 function SideBar({ channels, directMessages }) {
   const history = useHistory()
   const [activeId, setActiveId] = useState(null);
   const user = useSelector((state) => state.session.user);
   const userdms = directMessages.filter(dm => dm.users.includes(user.id))
+  // All of the users that current user has a dm with
 
   return (
     <div className='home-sidebar-container'>
@@ -41,7 +43,8 @@ function SideBar({ channels, directMessages }) {
             </div>
           ))}
           <div className='home-sidebar-channels-header'>
-          <div className='home-sidebar-channels-header-title'>Direct Messages</div>
+            <div className='home-sidebar-channels-header-title'>Direct Messages</div>
+            <OpenModalButton className={'add-channel-button'} buttonText={'+'} modalComponent={<CreateDirectMessageModal />}/>
           </div>
           {userdms.map(directMessage => {
 
@@ -53,7 +56,7 @@ function SideBar({ channels, directMessages }) {
                 onClick={(e) => history.push(`/home/dm/${directMessage.id}`)}
               >
                 <div className='home-sidebar-channel-name'>
-                  <div>{directMessage.user2.username}</div>
+                  <div>{user.id === directMessage.user2.id ? directMessage.user1.username : directMessage.user2.username}</div>
                 </div>
               </div>
             )

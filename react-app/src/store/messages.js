@@ -5,7 +5,7 @@ const GET_CHANNELID_MESSAGES = 'messages/CHANNEL_ID_GET'
 const DELETE_CHANNEL_MESSAGE = 'messages/channel/DELETE'
 const EDIT_MESSAGE = 'messages/delete'
 const GET_ALL_DIRECT_MESSAGES = 'direct_messages/GET_ALL'
-
+const CREATE_DIRECT_MESSAGE = 'direct_messages/CREATE'
 
 // ACTION CREATORS
 const actionGetAllMessages = (messages) => ({
@@ -42,6 +42,11 @@ export const actionEditMessage = (message) => ({
 const actionGetDirectMessages = (messages) => ({
   type: GET_ALL_DIRECT_MESSAGES,
   payload: messages
+})
+
+export const actionCreateDirectMessage = (message) => ({
+  type: CREATE_DIRECT_MESSAGE,
+  payload: message
 })
 
 // THUNKS
@@ -180,6 +185,16 @@ export default function reducer(state = initialState, action) {
         }
         newState.directMessages[directMessage.direct_message_id][directMessage.id] = directMessage;
       })
+      return newState;
+    }
+    case CREATE_DIRECT_MESSAGE: {
+      const newState = {
+        channelMessages: { ...state.channelMessages },
+        directMessages: { ...state.directMessages },
+        groupDirectMessages: { ...state.groupDirectMessages }
+      };
+      if (!newState.directMessages[action.payload.direct_message_id]) newState.directMessages[action.payload.direct_message_id] = {}
+      newState.directMessages[action.payload.direct_message_id][action.payload.id] = action.payload
       return newState;
     }
     default:

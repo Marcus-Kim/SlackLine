@@ -1,5 +1,5 @@
 from flask_socketio import SocketIO, join_room, leave_room, emit
-from .models import Message, db, Channel, channel_users
+from .models import Message, db, Channel, channel_users, DirectMessageMessage
 
 # Create your SocketIO instance
 socketio = SocketIO(cors_allowed_origins="*")
@@ -44,3 +44,20 @@ def handle_join_channel(join_data):
     channel = Channel.query.get(channel_id)
 
     emit("added_user_to_channel", channel.to_dict(), broadcast=True)
+
+@socketio.on('direct_message')
+def handle_direct_message(data):
+    direct_message_id = data['direct_message_id']
+    user_id = data['user_id']
+    body = data['body']
+
+    new_direct_message = DirectMessageMessage(
+        direct_message_id=direct_message_id,
+        user_id=user_id,
+        body=body
+    )
+
+    db.session.add(new_direct_message)
+    db.session.commit()
+
+    emit("created_direct_message", new_direct_message.to_dict(), broadcast=True)

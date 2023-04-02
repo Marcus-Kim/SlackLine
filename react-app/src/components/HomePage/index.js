@@ -10,6 +10,7 @@ import { thunkGetAllDMS } from "../../store/directMessages";
 import { thunkGetAllDirectMessages } from "../../store/messages";
 import { useParams } from "react-router-dom";
 import MainContentDirect from "./MainContentDirect";
+import { thunkGetUsers } from "../../store/allUsers";
 
 function HomePage() {
   const channels = useSelector((state) => Object.values(state.channels.allChannels));
@@ -24,6 +25,7 @@ function HomePage() {
       await dispatch(thunkGetAllMessages());
       await dispatch(thunkGetAllDMS());
       await dispatch(thunkGetAllDirectMessages())
+      await dispatch(thunkGetUsers())
       setLoading(false);
     };
 

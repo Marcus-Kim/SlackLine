@@ -1,0 +1,18 @@
+.create-direct-message-modal-container {
+  width: 520px;
+  padding: 30px;
+  color: rgb(204,205,206);
+  display: flex;
+  flex-direction: column;
+  height: 435px;
+}
+
+.create-direct-message-title-exit {
+  display: flex;
+  justify-content: space-between;
+}
+
+.create-direct-message-title {
+  font-size: 30px;
+  font-weight: bolder;
+}
