@@ -4,7 +4,7 @@
 
 .splash-header-container {
   /* border: 1px solid red; */
-  height: 725px;
+  height: 773px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -32,4 +32,109 @@
   text-align: center;
   align-self: center;
   border-radius: 5px;
+}
+
+.splash-signup-button:hover {
+  transition: background-color 0.3s ease;
+  background-color: #703578;
+  cursor: pointer;
+}
+
+.splash-learn-more-container {
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 93px;
+}
+
+.learn-more-text {
+  font-size: large;
+  padding: 15px;
+  margin-top: 5px;
+}
+
+.splash-about-section {
+  color: black;
+  width: 80%;
+  margin: auto;
+  /* border: 1px red solid; */
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  row-gap: 300px;
+}
+
+.about-container {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 15px;
+}
+
+.splash-developer-header,
+.about-header {
+  font-size: 50px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.about-text {
+  font-size: 30px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.developer-container {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 30px;
+}
+
+.splash-devloper-content-wrapper {
+  display: flex;
+  width: 1500px;
+  justify-content: center;
+}
+
+.splash-developer-text {
+  width: 50%;
+  font-size: 30px;
+  line-height: 1.5;
+  border-right: 2px solid black;
+  padding-right: 80px;
+}
+
+.splash-developer-links {
+  width: 50%;
+  padding-left: 80px;
+  font-size: 30px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+}
+
+#dev-name {
+  color: #703578;
+}
+
+.splash-bottom {
+  height: 300px;
+}
+
+.github-icon {
+  height: 30px;
+  padding-right: 10px;
+}
+
+.dev-link {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  
 }
