@@ -77,7 +77,7 @@ function SplashPage() {
         </div>
         <div className='developer-container'>
           <div className='splash-developer-header'>
-            Meet the Devlopers
+            Meet the Developers
           </div>
           <div className='splash-devloper-content-wrapper'>
             <div className='splash-developer-text'>
