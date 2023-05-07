@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Navigation.css';
-
+import video from './splash.mp4'
 function Navigation({ isLoaded }){
 
 	return (
@@ -13,6 +13,9 @@ function Navigation({ isLoaded }){
 					<NavLink className={'splash-nav-login-signup-button'} to='/login'>Log In</NavLink>
 				</div>
 			</div>
+			<video className='video' autoPlay loop muted >
+				<source src={video} type='video/mp4'/>
+			</video>
 		</div>
 	);
 }
