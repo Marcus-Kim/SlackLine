@@ -27,7 +27,7 @@ function MainContentDirect({ type }) {
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages])
+  }, [messages, dms.length])
 
   // useEffect(() => {
   //   if (selectedDm) {

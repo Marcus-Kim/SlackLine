@@ -23,7 +23,7 @@ def delete_directMessage(directMessageId):
     db.session.delete(directMessage)
     db.session.commit()
 
-    return "Successfully Deleted"
+    return jsonify({ "message": "Successfully Deleted"})
 
 #TODO Create a direct message
 @direct_message_routes.route('/', methods=['POST'])
@@ -39,4 +39,4 @@ def create_directMessage():
     db.session.add(dm)
     db.session.commit()
 
-    return dm
+    return dm.to_dict()

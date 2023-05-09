@@ -31,11 +31,17 @@ export const thunkGetAllDMS = () => async (dispatch) => {
 }
 
 export const thunkCreateDM = (dm) => async (dispatch) => {
-  const reponse = await fetch(`/api/direct_messages/`, {
+  const response = await fetch(`/api/direct_messages/`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: dm
+    body: JSON.stringify(dm)
   })
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(actionCreateDM(data));
+    return data;
+  }
 }
 
 export const thunkDeleteDM = (dmId) => async (dispatch) => {
@@ -64,6 +70,14 @@ export default function reducer(state = initialState, action) {
       action.payload.forEach(dm => {
         newState.dms[dm.id] = dm;
       })
+      return newState;
+    }
+    case CREATE_DM: {
+      const newState = {
+        dms: { ...state.dms },
+        gdms: { ...state.gdms }
+      }
+      newState.dms[action.payload.id] = action.payload;
       return newState;
     }
     case DELETE_DM: {
