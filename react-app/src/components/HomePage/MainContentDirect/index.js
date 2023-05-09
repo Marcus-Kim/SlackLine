@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { io } from "socket.io-client";
-import { actionCreateDirectMessage, actionEditDirectMessage, thunkGetAllDirectMessages } from "../../../store/messages";
+import { actionCreateDirectMessage, actionDeleteDirectMessageMessage, actionEditDirectMessage, thunkGetAllDirectMessages } from "../../../store/messages";
 import { useRef } from "react";
 import OpenModalButton from "../../OpenModalButton";
 import { faDoorClosed, faDoorOpen, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import EditDirectMessageMessageModal from "../HomePageModals/EditDirectMessageMessage/EditDirectMessage";
+import DeleteDirectMessageMessage from "../HomePageModals/DeleteDirectMessageMessage/DeleteDirectMessageMessage";
 let socket;
 
 function MainContentDirect({ type }) {
@@ -46,6 +47,10 @@ function MainContentDirect({ type }) {
 
     socket.on('direct_message_edited', (message) => {
       dispatch(actionEditDirectMessage(message));
+    })
+
+    socket.on('direct_message_message_deleted', (message) => {
+      dispatch(actionDeleteDirectMessageMessage(message));
     })
 
     return (() => {
@@ -89,7 +94,7 @@ function MainContentDirect({ type }) {
               {user.id === message.user_id && (
                     <div className='message-edit-delete-buttons'>
                       <OpenModalButton className={'message-edit-button'} icon={faPen} modalComponent={<EditDirectMessageMessageModal messageId={message.id} messageBody={message.body} socket={socket}/>}/>
-                      <OpenModalButton className={'message-delete-button'} icon={faTrash} />
+                      <OpenModalButton className={'message-delete-button'} icon={faTrash} modalComponent={<DeleteDirectMessageMessage message={message} socket={socket}/>} />
                     </div>
                   )}
             </div>

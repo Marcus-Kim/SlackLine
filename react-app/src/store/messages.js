@@ -7,6 +7,7 @@ const EDIT_MESSAGE = 'messages/delete';
 const GET_ALL_DIRECT_MESSAGES = 'direct_messages/GET_ALL';
 const CREATE_DIRECT_MESSAGE = 'direct_messages/CREATE';
 const EDIT_DIRECT_MESSAGE = 'direct_messages/EDIT';
+const DELETE_DIRECT_MESSAGE_MESSAGE = 'direct_messages/DELETE';
 
 // ACTION CREATORS
 const actionGetAllMessages = (messages) => ({
@@ -52,6 +53,11 @@ export const actionCreateDirectMessage = (message) => ({
 
 export const actionEditDirectMessage = (message) => ({
   type: EDIT_DIRECT_MESSAGE,
+  payload: message
+})
+
+export const actionDeleteDirectMessageMessage =  (message) => ({
+  type: DELETE_DIRECT_MESSAGE_MESSAGE,
   payload: message
 })
 
@@ -209,6 +215,15 @@ export default function reducer(state = initialState, action) {
         groupDirectMessages: { ...state.groupDirectMessages }
       };
       newState.directMessages[action.payload.direct_message_id][action.payload.id] = action.payload;
+      return newState;
+    }
+    case DELETE_DIRECT_MESSAGE_MESSAGE: {
+      const newState = {
+        channelMessages: { ...state.channelMessages },
+        directMessages: { ...state.directMessages },
+        groupDirectMessages: { ...state.groupDirectMessages }
+      };
+      delete newState.directMessages[action.payload.direct_message_id][action.payload.id]
       return newState;
     }
     default:

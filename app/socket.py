@@ -70,3 +70,12 @@ def handle_edit_direct_message(data):
     db.session.commit()
 
     emit('direct_message_edited', message.to_dict(), broadcast=True)
+
+@socketio.on('delete_direct_message_message')
+def handle_delete_direct_message_message(data):
+    message = DirectMessageMessage.query.get(data['id'])
+    print(message)
+    db.session.delete(message)
+    db.session.commit()
+
+    emit('direct_message_message_deleted', data, broadcast=True)
