@@ -1,11 +1,12 @@
 // ACTIONS
 const GET_ALL_MESSAGES = 'messages/GET_ALL';
-const CREATE_CHANNEL_MESSAGE = 'messages/channel/CREATE'
-const GET_CHANNELID_MESSAGES = 'messages/CHANNEL_ID_GET'
-const DELETE_CHANNEL_MESSAGE = 'messages/channel/DELETE'
-const EDIT_MESSAGE = 'messages/delete'
-const GET_ALL_DIRECT_MESSAGES = 'direct_messages/GET_ALL'
-const CREATE_DIRECT_MESSAGE = 'direct_messages/CREATE'
+const CREATE_CHANNEL_MESSAGE = 'messages/channel/CREATE';
+const GET_CHANNELID_MESSAGES = 'messages/CHANNEL_ID_GET';
+const DELETE_CHANNEL_MESSAGE = 'messages/channel/DELETE';
+const EDIT_MESSAGE = 'messages/delete';
+const GET_ALL_DIRECT_MESSAGES = 'direct_messages/GET_ALL';
+const CREATE_DIRECT_MESSAGE = 'direct_messages/CREATE';
+const EDIT_DIRECT_MESSAGE = 'direct_messages/EDIT';
 
 // ACTION CREATORS
 const actionGetAllMessages = (messages) => ({
@@ -46,6 +47,11 @@ const actionGetDirectMessages = (messages) => ({
 
 export const actionCreateDirectMessage = (message) => ({
   type: CREATE_DIRECT_MESSAGE,
+  payload: message
+})
+
+export const actionEditDirectMessage = (message) => ({
+  type: EDIT_DIRECT_MESSAGE,
   payload: message
 })
 
@@ -160,7 +166,6 @@ export default function reducer(state = initialState, action) {
         directMessages: { ...state.directMessages },
         groupDirectMessages: { ...state.groupDirectMessages }
       };
-      console.log("ACTION PAYLOAD: ", action.payload)
       newState.channelMessages[action.payload.channel_id][action.payload.id] = action.payload
       return newState;
     }
@@ -195,6 +200,15 @@ export default function reducer(state = initialState, action) {
       };
       if (!newState.directMessages[action.payload.direct_message_id]) newState.directMessages[action.payload.direct_message_id] = {}
       newState.directMessages[action.payload.direct_message_id][action.payload.id] = action.payload
+      return newState;
+    }
+    case EDIT_DIRECT_MESSAGE: {
+      const newState = {
+        channelMessages: { ...state.channelMessages },
+        directMessages: { ...state.directMessages },
+        groupDirectMessages: { ...state.groupDirectMessages }
+      };
+      newState.directMessages[action.payload.direct_message_id][action.payload.id] = action.payload;
       return newState;
     }
     default:

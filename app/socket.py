@@ -61,3 +61,12 @@ def handle_direct_message(data):
     db.session.commit()
 
     emit("created_direct_message", new_direct_message.to_dict(), broadcast=True)
+
+@socketio.on('edit_direct_message')
+def handle_edit_direct_message(data):
+    message = DirectMessageMessage.query.get(data['messageId'])
+
+    message.body = data['newMessage']
+    db.session.commit()
+
+    emit('direct_message_edited', message.to_dict(), broadcast=True)
