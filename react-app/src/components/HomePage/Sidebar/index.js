@@ -8,6 +8,7 @@ import EditChannelModal from '../HomePageModals/EditChannel/EditChannel'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import CreateDirectMessageModal from '../HomePageModals/CreateDirectMessage/CreateDirectMessage'
+import DeleteDirectMessageModal from '../HomePageModals/DeleteDirectMessage/DeleteDirectMessage'
 
 function SideBar({ channels, directMessages }) {
   const history = useHistory()
@@ -57,6 +58,9 @@ function SideBar({ channels, directMessages }) {
               >
                 <div className='home-sidebar-channel-name'>
                   <div>{user.id === directMessage.user2.id ? directMessage.user1.username : directMessage.user2.username}</div>
+                </div>
+                <div>
+                  <OpenModalButton className={'channel-delete-button'} icon={faTrash} modalComponent={<DeleteDirectMessageModal dmId={directMessage.id} />}/>
                 </div>
               </div>
             )

@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
-from .user import User
+from app.models.user import User
+
 
 #TODO Create direct_messages model
 # Relationships -> users, direct_messages_messages
@@ -18,6 +19,7 @@ class DirectMessage(db.Model):
 
     #TODO add direct_messages_messages relationship
     user = db.relationship("User", back_populates='direct_messages')
+
 
     def to_dict(self):
         return {

@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from .channel_users import channel_users
 
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
@@ -20,6 +21,7 @@ class User(db.Model, UserMixin):
     direct_messages = db.relationship("DirectMessage", back_populates='user')
     direct_message_messages = db.relationship("DirectMessageMessage", back_populates='user')
 
+
     @property
     def password(self):
         return self.hashed_password
@@ -36,6 +38,26 @@ class User(db.Model, UserMixin):
     def get_direct_messages(self):
         return [direct_message.id for direct_message in self.direct_messages]
 
+    @property
+    def get_direct_message_user_ids(self):
+        from app.models.direct_messages import DirectMessage
+        direct_messages = DirectMessage.query.filter(
+            (DirectMessage.user1_id == self.id) | (DirectMessage.user2_id == self.id)
+        ).all()
+
+        user_ids = set()
+        for dm in direct_messages:
+            if dm.user1_id == self.id:
+                user_ids.add(dm.user2_id)
+            else:
+                user_ids.add(dm.user1_id)
+
+        users = User.query.filter(User.id.in_(user_ids)).all()
+
+        return [u.to_dict() for u in users]
+
+
+
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
@@ -45,5 +67,6 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'channels': self.get_channels,
             'direct_messages': self.get_direct_messages,
+            # 'direct_message_user_ids': self.get_direct_message_user_ids,
             'username': self.username
         }
