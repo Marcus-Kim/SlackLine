@@ -45,13 +45,17 @@ export const thunkCreateDM = (dm) => async (dispatch) => {
 }
 
 export const thunkDeleteDM = (dmId) => async (dispatch) => {
+  console.log("ENTERED THUNK")
   const response = await fetch(`/api/direct_messages/${dmId}`, {
     method: 'DELETE'
   });
-
+  console.log("AFTER FETCH")
   if (response.ok) {
+    console.log("RESPONSE OK")
     const data = await response.json();
+    console.log("JSON DATA")
     dispatch(actionDeleteDM(dmId));
+    console.log("AFTER DISPATCH ACTION")
     return data;
   }
 }

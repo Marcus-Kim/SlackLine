@@ -13,12 +13,15 @@ function DeleteDirectMessageModal({ dmId }) {
 
   const handleClick = async (e) => {
     e.preventDefault()
+    console.log("CLICKED")
     const result = await dispatch(thunkDeleteDM(dmId))
+    console.log("AFTER DISPATCH")
+    console.log(result)
     if (result) {
       history.push('/home/channel/1')
       history.go(0)
     }
-    console.log("DELETED")
+
     closeModal();
   }
 

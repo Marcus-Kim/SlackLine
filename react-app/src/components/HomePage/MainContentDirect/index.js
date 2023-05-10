@@ -58,6 +58,8 @@ function MainContentDirect({ type }) {
     })
   }, [])
 
+  if (!selectedDm) return null;
+
   const handleSubmit = (e) => {
     e.preventDefault();
 

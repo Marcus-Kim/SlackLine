@@ -33,7 +33,6 @@ function HomePage() {
   }, [dispatch, channels.length]);
 
   if (!channels.length) return null;
-  if (!dms.length) return null;
 
   return (
     <Router>
