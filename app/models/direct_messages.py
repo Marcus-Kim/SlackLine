@@ -19,6 +19,7 @@ class DirectMessage(db.Model):
 
     #TODO add direct_messages_messages relationship
     user = db.relationship("User", back_populates='direct_messages')
+    direct_message_messages = db.relationship('DirectMessageMessage', back_populates='direct_message')
 
 
     def to_dict(self):

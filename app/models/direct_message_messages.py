@@ -15,6 +15,7 @@ class DirectMessageMessage(db.Model):
     created_at = db.Column(db.Date, default=datetime.now(tz=None), nullable=False)
 
     user = db.relationship("User", back_populates='direct_message_messages')
+    direct_message = db.relationship("DirectMessage", back_populates='direct_message_messages', cascade='all, delete')
 
     @property
     def get_username(self):
