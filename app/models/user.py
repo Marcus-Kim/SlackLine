@@ -2,7 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from .channel_users import channel_users
-
+from .group_direct_message_users import group_direct_message_users
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -20,7 +20,8 @@ class User(db.Model, UserMixin):
     channels = db.relationship("Channel", secondary=channel_users, back_populates='users')
     direct_messages = db.relationship("DirectMessage", back_populates='user')
     direct_message_messages = db.relationship("DirectMessageMessage", back_populates='user')
-
+    group_direct_messages = db.relationship("GroupDirectMessage", secondary=group_direct_message_users, back_populates='users')
+    group_direct_message_messages = db.relationship("GroupDirectMessageMessage", back_populates='user')
 
     @property
     def password(self):
