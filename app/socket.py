@@ -91,7 +91,7 @@ def handle_create_group_direct_message_message(message):
     db.session.add(message)
     db.session.commit()
 
-    emit('group_direct_message_message_created', message, broadcast=True)
+    emit('group_direct_message_message_created', message.to_dict(), broadcast=True)
 
 @socketio.on('edit_group_direct_message_message')
 def handle_edit_group_direct_message_message(messageData):

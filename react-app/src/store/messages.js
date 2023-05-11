@@ -11,7 +11,7 @@ const EDIT_DIRECT_MESSAGE = 'direct_messages/EDIT';
 const DELETE_DIRECT_MESSAGE_MESSAGE = 'direct_messages/DELETE';
 
 const GET_ALL_GROUP_DIRECT_MESSAGE_MESSAGES = 'group_direct_messages/GET_ALL';
-const CREATE_GROUP_DIRECT_MESSAGE = 'group_direct_messages/CREATE';
+const CREATE_GROUP_DIRECT_MESSAGE_MESSAGE = 'group_direct_messages/CREATE';
 const EDIT_GROUP_DIRECT_MESSAGE = 'group_direct_messages/EDIT';
 const DELETE_GROUP_DIRECT_MESSAGE = 'group_direct_messages/DELETE';
 
@@ -73,6 +73,11 @@ export const actionDeleteDirectMessageMessage = (message) => ({
 const actionGetAllGDMS = (messages) => ({
   type: GET_ALL_GROUP_DIRECT_MESSAGE_MESSAGES,
   payload: messages
+})
+
+export const actionCreateGroupDirectMessageMessage = (message) => ({
+  type: CREATE_GROUP_DIRECT_MESSAGE_MESSAGE,
+  payload: message
 })
 
 // THUNKS
@@ -256,13 +261,22 @@ export default function reducer(state = initialState, action) {
         directMessages: { ...state.directMessages },
         groupDirectMessages: { ...state.groupDirectMessages }
       };
-      console.log("ACTION PAYLOAD", action.payload);
       action.payload.forEach(gdm => {
         if (!newState.groupDirectMessages[gdm.group_direct_message_id]) {
           newState.groupDirectMessages[gdm.group_direct_message_id] = {};
         }
         newState.groupDirectMessages[gdm.group_direct_message_id][gdm.id] = gdm;
       })
+      return newState;
+    }
+    case CREATE_GROUP_DIRECT_MESSAGE_MESSAGE: {
+      const newState = {
+        channelMessages: { ...state.channelMessages },
+        directMessages: { ...state.directMessages },
+        groupDirectMessages: { ...state.groupDirectMessages }
+      };
+      if (!newState.groupDirectMessages[action.payload.group_direct_message_id]) newState.groupDirectMessages[action.payload.group_direct_message_id] = {}
+      newState.groupDirectMessages[action.payload.group_direct_message_id][action.payload.id] = action.payload
       return newState;
     }
     default:

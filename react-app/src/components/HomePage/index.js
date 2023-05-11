@@ -13,6 +13,7 @@ import MainContentDirect from "./MainContentDirect";
 import { thunkGetUsers } from "../../store/allUsers";
 import { thunkGetGDMS } from "../../store/directMessages";
 import { thunkGetAllGroupDirectMessageMessages } from "../../store/messages";
+import MainContentGroupDirect from "./MainContentGroupDirect";
 
 function HomePage() {
   const channels = useSelector((state) => Object.values(state.channels.allChannels));
@@ -57,7 +58,7 @@ function HomePage() {
                 <MainContentDirect type='direct' />
               </Route>
               <Route path={`/home/gdm/:gdmId`}>
-                <MainContentDirect type='group' />
+                <MainContentGroupDirect type='group' />
               </Route>
             </Switch>
           </>

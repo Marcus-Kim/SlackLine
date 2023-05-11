@@ -6,7 +6,7 @@ def seed_group_direct_message_messages():
         {'group_direct_message_id': 1, 'user_id': 1, 'body': 'Hello group!!'},
         {'group_direct_message_id': 1, 'user_id': 2, 'body': 'Nice to meet you all'},
         {'group_direct_message_id': 2, 'user_id': 1, 'body': 'Hello other group!!'},
-        {'group_direct_message_id': 2, 'user_id': 1, 'body': 'Oh hey whats poppin'},
+        {'group_direct_message_id': 2, 'user_id': 3, 'body': 'Oh hey whats poppin'},
     ]
 
     for group_direct_message_message in group_direct_message_messages:

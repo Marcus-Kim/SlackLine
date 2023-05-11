@@ -32,12 +32,6 @@ function MainContentDirect({ type }) {
     scrollToBottom()
   }, [messages, dms.length])
 
-  // useEffect(() => {
-  //   if (selectedDm) {
-  //     dispatch(thunkGetAllDirectMessages())
-  //   }
-  // }, [])
-
   useEffect(() => {
     socket = io();
 
