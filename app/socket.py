@@ -1,5 +1,5 @@
 from flask_socketio import SocketIO, join_room, leave_room, emit
-from .models import Message, db, Channel, channel_users, DirectMessageMessage
+from .models import Message, db, Channel, channel_users, DirectMessageMessage, GroupDirectMessageMessage
 
 # Create your SocketIO instance
 socketio = SocketIO(cors_allowed_origins="*")
@@ -79,3 +79,34 @@ def handle_delete_direct_message_message(data):
     db.session.commit()
 
     emit('direct_message_message_deleted', data, broadcast=True)
+
+@socketio.on('create_group_direct_message_message')
+def handle_create_group_direct_message_message(message):
+    message = GroupDirectMessageMessage(
+        group_direct_message_id=message['group_direct_message_id'],
+        user_id=message['user_id'],
+        body=message['body']
+    )
+
+    db.session.add(message)
+    db.session.commit()
+
+    emit('group_direct_message_message_created', message, broadcast=True)
+
+@socketio.on('edit_group_direct_message_message')
+def handle_edit_group_direct_message_message(messageData):
+    message = GroupDirectMessageMessage.query.get(messageData['id'])
+
+    message.body = messageData['body']
+    db.session.commit()
+
+    emit('group_direct_message_message_edited', message, broadcast=True)
+
+@socketio.on('delete_group_direct_message_message')
+def handle_delete_group_direct_message_message(messageId):
+    message = GroupDirectMessageMessage.query.get(messageId)
+
+    db.session.delete(message)
+    db.session.commit()
+
+    emit('group_direct_message_message_deleted', messageId, broadcast=True)

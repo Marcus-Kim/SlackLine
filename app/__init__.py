@@ -14,6 +14,7 @@ from .api.auth_routes import auth_routes
 from .api.channel_routes import channel_routes
 from .api.messages_routes import message_routes
 from .api.direct_message_routes import direct_message_routes
+from .api.group_direct_message_routes import group_direct_message_routes
 from .seeds import seed_commands
 from .config import Config
 from eventlet import monkey_patch
@@ -44,6 +45,8 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(channel_routes, url_prefix='/api/channels')
 app.register_blueprint(message_routes, url_prefix='/api/messages')
 app.register_blueprint(direct_message_routes, url_prefix='/api/direct_messages')
+app.register_blueprint(group_direct_message_routes, url_prefix='/api/group_direct_messages')
+
 db.init_app(app)
 Migrate(app, db)
 # you could include this line right after Migrate(app, db)

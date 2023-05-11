@@ -10,9 +10,9 @@ direct_message_routes = Blueprint('direct_messages', __name__)
 def get_direct_messages():
     directMessages = DirectMessage.query.all()
 
-    data = [directMessage.to_dict() for directMessage in directMessages];
+    data = [directMessage.to_dict() for directMessage in directMessages]
 
-    return data;
+    return data
 
 #TODO Delete a direct message
 @direct_message_routes.route('/<int:directMessageId>', methods=['DELETE'])

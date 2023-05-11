@@ -18,9 +18,14 @@ class GroupDirectMessage(db.Model):
     # group direct message message
     group_direct_message_message = db.relationship("GroupDirectMessageMessage", back_populates='direct_message')
 
+    @property
+    def get_users(self):
+        return [user.id for user in self.users]
+
     def to_dict(self):
         return {
             'id': self.id,
             'name': self.name,
-            'create_at': self.created_at
+            'create_at': self.created_at,
+            'users': self.get_users
         }
