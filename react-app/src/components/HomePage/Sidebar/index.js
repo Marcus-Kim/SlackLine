@@ -15,8 +15,8 @@ function SideBar({ channels, directMessages }) {
   const [activeId, setActiveId] = useState(null);
   const user = useSelector((state) => state.session.user);
   const userdms = directMessages.filter(dm => dm.users.includes(user.id))
-  // All of the users that current user has a dm with
-
+  const gdms = useSelector(state => Object.values(state.directMessages.gdms))
+  
   return (
     <div className='home-sidebar-container'>
         <div className='home-sidebar-heading-container'>
@@ -61,6 +61,23 @@ function SideBar({ channels, directMessages }) {
                 </div>
                 <div>
                   <OpenModalButton className={'channel-delete-button'} icon={faTrash} modalComponent={<DeleteDirectMessageModal dmId={directMessage.id} />}/>
+                </div>
+              </div>
+            )
+          })}
+          <div className='home-sidebar-channels-header'>
+            <div className='home-sidebar-channels-header-title'>Group Direct Messages</div>
+            <OpenModalButton className={'add-channel-button'} buttonText={'+'} modalComponent={<CreateDirectMessageModal />}/>
+          </div>
+          {gdms.map(gdm => {
+            return (
+              <div key={gdm.id} className='home-sidebar-channel' onClick={() => history.push(`/home/gdm/${gdm.id}`)}>
+                <div className='home-sidebar-channel-name'>
+                  <div>{gdm.name}</div>
+                </div>
+                <div>
+                  <OpenModalButton className={'channel-edit-button'} icon={faPen}/>
+                  <OpenModalButton className={'channel-delete-button'} icon={faTrash}/>
                 </div>
               </div>
             )
