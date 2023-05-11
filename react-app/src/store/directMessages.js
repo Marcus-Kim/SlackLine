@@ -1,9 +1,15 @@
-// ACTIONS
+// DM ACTIONS
 const GET_DMS = 'directMessages/dms/GET_ALL';
 const DELETE_DM = 'directMessages/dms/DELETE';
 const CREATE_DM = 'directMessages/dms/CREATE';
 
-// ACTION CREATORS
+// GDM ACTIONS
+const GET_GDMS = 'directMessages/gdms/GET_ALL';
+const CREATE_GDM = 'directMessages/gdm/CREATE';
+const UPDATE_GDM = 'directMessages/gdm/UPDATE';
+const DELETE_GDM = 'directMessage/gdm/DELETE';
+
+// DM ACTION CREATORS
 const actionGetAllDMS = (dms) => ({
   type: GET_DMS,
   payload: dms
@@ -19,7 +25,13 @@ const actionDeleteDM = (dmId) => ({
   payload: dmId
 })
 
-// THUNKS
+// GDM ACTION CREATORS
+const actionGetAllGDMS = (gdms) => ({
+  type: GET_GDMS,
+  payload: gdms
+})
+
+// DM THUNKS
 export const thunkGetAllDMS = () => async (dispatch) => {
   const response = await fetch('/api/direct_messages/');
 
@@ -45,19 +57,25 @@ export const thunkCreateDM = (dm) => async (dispatch) => {
 }
 
 export const thunkDeleteDM = (dmId) => async (dispatch) => {
-  console.log("ENTERED THUNK")
   const response = await fetch(`/api/direct_messages/${dmId}`, {
     method: 'DELETE'
   });
-  console.log("AFTER FETCH")
   if (response.ok) {
-    console.log("RESPONSE OK")
     const data = await response.json();
-    console.log("JSON DATA")
     dispatch(actionDeleteDM(dmId));
-    console.log("AFTER DISPATCH ACTION")
     return data;
   }
+}
+
+// GDM THUNKS
+export const thunkGetGDMS = () => async (dispatch) => {
+  const response = await fetch(`/api/group_direct_messages/`);
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(actionGetAllGDMS(data))
+    return data;
+  };
 }
 
 // INITIAL STATE
@@ -90,6 +108,16 @@ export default function reducer(state = initialState, action) {
         gdms: { ...state.gdms }
       };
       delete newState.dms[action.payload];
+      return newState;
+    }
+    case GET_GDMS: {
+      const newState = {
+        dms: { ...state.dms },
+        gdms: { ...state.gdms }
+      };
+      action.payload.forEach(gdm => {
+        newState.gdms[gdm.id] = gdm;
+      })
       return newState;
     }
     default:

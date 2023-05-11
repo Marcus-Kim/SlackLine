@@ -4,10 +4,16 @@ const CREATE_CHANNEL_MESSAGE = 'messages/channel/CREATE';
 const GET_CHANNELID_MESSAGES = 'messages/CHANNEL_ID_GET';
 const DELETE_CHANNEL_MESSAGE = 'messages/channel/DELETE';
 const EDIT_MESSAGE = 'messages/delete';
+
 const GET_ALL_DIRECT_MESSAGES = 'direct_messages/GET_ALL';
 const CREATE_DIRECT_MESSAGE = 'direct_messages/CREATE';
 const EDIT_DIRECT_MESSAGE = 'direct_messages/EDIT';
 const DELETE_DIRECT_MESSAGE_MESSAGE = 'direct_messages/DELETE';
+
+const GET_ALL_GROUP_DIRECT_MESSAGE_MESSAGES = 'group_direct_messages/GET_ALL';
+const CREATE_GROUP_DIRECT_MESSAGE = 'group_direct_messages/CREATE';
+const EDIT_GROUP_DIRECT_MESSAGE = 'group_direct_messages/EDIT';
+const DELETE_GROUP_DIRECT_MESSAGE = 'group_direct_messages/DELETE';
 
 // ACTION CREATORS
 const actionGetAllMessages = (messages) => ({
@@ -41,6 +47,8 @@ export const actionEditMessage = (message) => ({
   payload: message
 })
 
+
+// DIRECT MESSAGE ACTION CREATORS
 const actionGetDirectMessages = (messages) => ({
   type: GET_ALL_DIRECT_MESSAGES,
   payload: messages
@@ -56,9 +64,15 @@ export const actionEditDirectMessage = (message) => ({
   payload: message
 })
 
-export const actionDeleteDirectMessageMessage =  (message) => ({
+export const actionDeleteDirectMessageMessage = (message) => ({
   type: DELETE_DIRECT_MESSAGE_MESSAGE,
   payload: message
+})
+
+// GROUP DIRECT MESSAGE MESSAGE ACTION CREATORS
+const actionGetAllGDMS = (messages) => ({
+  type: GET_ALL_GROUP_DIRECT_MESSAGE_MESSAGES,
+  payload: messages
 })
 
 // THUNKS
@@ -118,6 +132,16 @@ export const thunkGetAllDirectMessages = () => async (dispatch) => {
     dispatch(actionGetDirectMessages(data));
     return data;
   }
+}
+
+export const thunkGetAllGroupDirectMessageMessages = () => async (dispatch) => {
+  const response = await fetch('/api/group_direct_messages/messages');
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(actionGetAllGDMS(data));
+    return data;
+  };
 }
 
 // INITIAL STATE
@@ -224,6 +248,21 @@ export default function reducer(state = initialState, action) {
         groupDirectMessages: { ...state.groupDirectMessages }
       };
       delete newState.directMessages[action.payload.direct_message_id][action.payload.id]
+      return newState;
+    }
+    case GET_ALL_GROUP_DIRECT_MESSAGE_MESSAGES: {
+      const newState = {
+        channelMessages: { ...state.channelMessages },
+        directMessages: { ...state.directMessages },
+        groupDirectMessages: { ...state.groupDirectMessages }
+      };
+      console.log("ACTION PAYLOAD", action.payload);
+      action.payload.forEach(gdm => {
+        if (!newState.groupDirectMessages[gdm.group_direct_message_id]) {
+          newState.groupDirectMessages[gdm.group_direct_message_id] = {};
+        }
+        newState.groupDirectMessages[gdm.group_direct_message_id][gdm.id] = gdm;
+      })
       return newState;
     }
     default:
