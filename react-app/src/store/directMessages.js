@@ -102,6 +102,21 @@ export const thunkCreateGDM = (gdm) => async (dispatch) => {
   }
 }
 
+export const thunkAddUsersGDM = (gdm, users) => async (dispatch) => {
+  console.log("HELLO", users)
+  const response = await fetch(`/api/group_direct_messages/${gdm}`, {
+    method: ['POST'],
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(users)
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(actionUpdateGDM(data))
+    return data;
+  }
+}
+
 // INITIAL STATE
 const initialState = { dms: {}, gdms: {} }
 

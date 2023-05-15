@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import GroupDirectMessage, db, GroupDirectMessageMessage
+from app.models import GroupDirectMessage, db, GroupDirectMessageMessage, group_direct_message_users
 
 group_direct_message_routes = Blueprint('group_direct_messages', __name__)
 
@@ -51,6 +51,24 @@ def delete_group_direct_message(groupDirectMessageId):
     db.session.commit()
 
     return { 'message': 'Successfully Deleted!' }
+
+#TODO Add to gdm users
+@group_direct_message_routes.route('/<int:groupDirectMessageId>', methods=['POST'])
+@login_required
+def add_users_gdm(groupDirectMessageId):
+
+    req_body = request.get_json()
+    users = req_body['users']
+
+    for user in users:
+        print('HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO')
+        new_gdm_user_statement = group_direct_message_users.insert().values(group_direct_message_id=groupDirectMessageId, user_id=user)
+        result = db.session.execute(new_gdm_user_statement)
+        db.session.commit()
+
+    gdm = GroupDirectMessage.query.get(groupDirectMessageId)
+
+    return gdm.to_dict()
 
 #! <------------------------------------------------------------------------------------->
 
