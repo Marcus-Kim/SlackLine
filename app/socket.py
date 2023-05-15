@@ -1,5 +1,5 @@
 from flask_socketio import SocketIO, join_room, leave_room, emit
-from .models import Message, db, Channel, channel_users, DirectMessageMessage, GroupDirectMessageMessage
+from .models import Message, db, Channel, channel_users, group_direct_message_users, DirectMessageMessage, GroupDirectMessageMessage, GroupDirectMessage
 
 # Create your SocketIO instance
 socketio = SocketIO(cors_allowed_origins="*")
@@ -44,6 +44,19 @@ def handle_join_channel(join_data):
     channel = Channel.query.get(channel_id)
 
     emit("added_user_to_channel", channel.to_dict(), broadcast=True)
+
+@socketio.on("join_gdm")
+def handle_join_gdm(join_data):
+    user_id = join_data['userId']
+    gdm_id = join_data['gdmId']
+
+    new_gdm_user_statement = group_direct_message_users.insert().values(group_direct_message_id=gdm_id, user_id=user_id)
+    result = db.session.execute(new_gdm_user_statement)
+    db.session.commit()
+
+    gdm = GroupDirectMessage.query.get(gdm_id)
+
+    emit("added_user_to_gdm", gdm.to_dict(), broadcast=True)
 
 @socketio.on('direct_message')
 def handle_direct_message(data):

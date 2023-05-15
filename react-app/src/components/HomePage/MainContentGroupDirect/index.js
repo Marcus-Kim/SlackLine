@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
@@ -8,6 +8,8 @@ import { useRef } from "react";
 import OpenModalButton from "../../OpenModalButton";
 import { faDoorClosed, faDoorOpen, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { actionCreateGroupDirectMessageMessage } from "../../../store/messages";
+import { actionUpdateGDM } from "../../../store/directMessages";
+import { thunkGetAllGroupDirectMessageMessages } from "../../../store/messages";
 let socket;
 
 function MainContentGroupDirect() {
@@ -17,11 +19,12 @@ function MainContentGroupDirect() {
   const messages = useSelector(state => state.messages.groupDirectMessages);
   const user = useSelector(state => state.session.user);
   const messagesEndRef = useRef(null);
-
+  const history = useHistory();
   const dispatch = useDispatch();
 
   // useStates
   const [message, setMessage] = useState('');
+  const [isHovered, setIsHovered] = useState(false)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -32,10 +35,22 @@ function MainContentGroupDirect() {
   }, [messages, gdms.length])
 
   useEffect(() => {
+    if (selectedGdm) {
+      dispatch(thunkGetAllGroupDirectMessageMessages());
+    }
+  }, [dispatch, selectedGdm?.users.length, selectedGdm])
+
+  const userIsInGDM = selectedGdm.users.includes(user.id)
+
+  useEffect(() => {
     socket = io();
 
     socket.on('group_direct_message_message_created', (message) => {
       dispatch(actionCreateGroupDirectMessageMessage(message));
+    })
+
+    socket.on('added_user_to_gdm', (gdm) => {
+      dispatch(actionUpdateGDM(gdm));
     })
 
     return (() => {
@@ -65,13 +80,35 @@ function MainContentGroupDirect() {
     }
   };
 
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+  }
+
+  const joinGroup = (e) => {
+    e.preventDefault();
+
+    const joinData = {
+      userId: user.id,
+      gdmId: selectedGdm.id
+    }
+
+    socket.emit('join_gdm', joinData)
+
+  }
+
   return (
     <div className="home-content-container">
       <div className="home-content-header-container">{selectedGdm.name}</div>
-      <div className="home-content-messages-container">
+      {userIsInGDM ? (
+        <>
+          <div className="home-content-messages-container">
         <div className="messages-wrapper">
           {messages[gdmId] ? Object.values(messages[gdmId]).map(message => (
-            <div className="message-container-container">
+            <div key={message.id} className="message-container-container">
             <div className="message-container">
               <div className="message-username">{message.username}</div>
               <div className="message-body">{message.body}</div>
@@ -107,6 +144,25 @@ function MainContentGroupDirect() {
             <FontAwesomeIcon icon={faPaperPlane}/>
         </button>
       </form>
+        </>
+      ) : (
+        <>
+          <div className="restricted-channel-access">
+          <h2>You are not a member of this Group.</h2>
+          <p>Join the Group to view and send messages.</p>
+          <div
+            className='join-channel-button'
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onClick={e => joinGroup(e)}
+          >
+            <FontAwesomeIcon icon={isHovered ? faDoorOpen : faDoorClosed} />
+            Join Group
+          </div>
+        </div>
+        </>
+      )}
+
     </div>
   )
 }

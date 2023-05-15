@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import CreateDirectMessageModal from '../HomePageModals/CreateDirectMessage/CreateDirectMessage'
 import DeleteDirectMessageModal from '../HomePageModals/DeleteDirectMessage/DeleteDirectMessage'
+import CreateGroupDirectMessageModal from '../HomePageModals/CreateGroupDirectMessage/CreateGroupDirectMessage'
 
 function SideBar({ channels, directMessages }) {
   const history = useHistory()
@@ -16,7 +17,7 @@ function SideBar({ channels, directMessages }) {
   const user = useSelector((state) => state.session.user);
   const userdms = directMessages.filter(dm => dm.users.includes(user.id))
   const gdms = useSelector(state => Object.values(state.directMessages.gdms))
-  
+
   return (
     <div className='home-sidebar-container'>
         <div className='home-sidebar-heading-container'>
@@ -67,7 +68,7 @@ function SideBar({ channels, directMessages }) {
           })}
           <div className='home-sidebar-channels-header'>
             <div className='home-sidebar-channels-header-title'>Group Direct Messages</div>
-            <OpenModalButton className={'add-channel-button'} buttonText={'+'} modalComponent={<CreateDirectMessageModal />}/>
+            <OpenModalButton className={'add-channel-button'} buttonText={'+'} modalComponent={<CreateGroupDirectMessageModal />}/>
           </div>
           {gdms.map(gdm => {
             return (

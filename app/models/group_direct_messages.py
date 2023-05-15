@@ -26,6 +26,6 @@ class GroupDirectMessage(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'create_at': self.created_at,
+            'created_at': self.created_at.strftime("%Y-%m-%dT%H:%M:%S"),
             'users': self.get_users
         }

@@ -31,6 +31,16 @@ const actionGetAllGDMS = (gdms) => ({
   payload: gdms
 })
 
+const actionCreateGDM = (gdm) => ({
+  type: CREATE_GDM,
+  payload: gdm
+})
+
+export const actionUpdateGDM = (gdm) => ({
+  type: UPDATE_GDM,
+  payload: gdm
+})
+
 // DM THUNKS
 export const thunkGetAllDMS = () => async (dispatch) => {
   const response = await fetch('/api/direct_messages/');
@@ -78,6 +88,20 @@ export const thunkGetGDMS = () => async (dispatch) => {
   };
 }
 
+export const thunkCreateGDM = (gdm) => async (dispatch) => {
+  const response = await fetch(`/api/group_direct_messages/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(gdm)
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(actionCreateGDM(data));
+    return data;
+  }
+}
+
 // INITIAL STATE
 const initialState = { dms: {}, gdms: {} }
 
@@ -118,6 +142,22 @@ export default function reducer(state = initialState, action) {
       action.payload.forEach(gdm => {
         newState.gdms[gdm.id] = gdm;
       })
+      return newState;
+    }
+    case CREATE_GDM: {
+      const newState = {
+        dms: { ...state.dms },
+        gdms: { ...state.gdms }
+      };
+      newState.gdms[action.payload.id] = action.payload;
+      return newState;
+    }
+    case UPDATE_GDM: {
+      const newState = {
+        dms: { ...state.dms },
+        gdms: { ...state.gdms }
+      };
+      newState.gdms[action.payload.id] = action.payload;
       return newState;
     }
     default:
