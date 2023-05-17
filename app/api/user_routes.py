@@ -23,3 +23,8 @@ def user(id):
     """
     user = User.query.get(id)
     return user.to_dict()
+
+#TODO Create a route for a user to join a channel
+
+
+#TODO Create a route for a user to leave a channel

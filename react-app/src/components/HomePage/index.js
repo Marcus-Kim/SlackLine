@@ -6,10 +6,18 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkGetAllChannels } from '../../store/channels';
 import { thunkGetAllMessages } from "../../store/messages";
+import { thunkGetAllDMS } from "../../store/directMessages";
+import { thunkGetAllDirectMessages } from "../../store/messages";
 import { useParams } from "react-router-dom";
+import MainContentDirect from "./MainContentDirect";
+import { thunkGetUsers } from "../../store/allUsers";
+import { thunkGetGDMS } from "../../store/directMessages";
+import { thunkGetAllGroupDirectMessageMessages } from "../../store/messages";
+import MainContentGroupDirect from "./MainContentGroupDirect";
 
 function HomePage() {
   const channels = useSelector((state) => Object.values(state.channels.allChannels));
+  const dms = useSelector(state => Object.values(state.directMessages.dms))
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const { channelId } = useParams();
@@ -18,6 +26,11 @@ function HomePage() {
     const fetchChannels = async () => {
       await dispatch(thunkGetAllChannels());
       await dispatch(thunkGetAllMessages());
+      await dispatch(thunkGetAllDMS());
+      await dispatch(thunkGetAllDirectMessages());
+      await dispatch(thunkGetUsers());
+      await dispatch(thunkGetGDMS());
+      await dispatch(thunkGetAllGroupDirectMessageMessages());
       setLoading(false);
     };
 
@@ -33,13 +46,19 @@ function HomePage() {
           <div>Loading...</div>
         ) : (
           <>
-            <SideBar channels={channels} />
+            <SideBar channels={channels} directMessages={dms}/>
             <Switch>
               <Route exact path="/home">
                 <MainContent key={channelId} />
               </Route>
               <Route path={`/home/channel/:channelId`}>
                 <MainContent key={channelId} />
+              </Route>
+              <Route path={`/home/dm/:dmId`}>
+                <MainContentDirect type='direct' />
+              </Route>
+              <Route path={`/home/gdm/:gdmId`}>
+                <MainContentGroupDirect type='group' />
               </Route>
             </Switch>
           </>

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Message, db
+from app.models import Message, db, DirectMessageMessage
 
 message_routes = Blueprint('messages', __name__)
 
@@ -8,7 +8,7 @@ message_routes = Blueprint('messages', __name__)
 @message_routes.route('/')
 @login_required
 def get_messages():
-    messages = Message.query.all();
+    messages = Message.query.all()
 
     data = [message.to_dict() for message in messages];
 
@@ -24,3 +24,13 @@ def delete_message(messageId):
     db.session.commit()
 
     return { 'message': 'Successfully Deleted' }
+
+#TODO Get all direct_message messages
+@message_routes.route('/direct_messages/')
+@login_required
+def get_direct_message_messages():
+    messages = DirectMessageMessage.query.all()
+
+    data = [message.to_dict() for message in messages]
+
+    return data

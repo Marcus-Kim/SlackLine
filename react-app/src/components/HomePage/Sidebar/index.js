@@ -6,12 +6,20 @@ import DeleteChannelModal from '../HomePageModals/DeleteChannel/DeleteChannel'
 import { useHistory } from 'react-router-dom'
 import EditChannelModal from '../HomePageModals/EditChannel/EditChannel'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import CreateDirectMessageModal from '../HomePageModals/CreateDirectMessage/CreateDirectMessage'
+import DeleteDirectMessageModal from '../HomePageModals/DeleteDirectMessage/DeleteDirectMessage'
+import CreateGroupDirectMessageModal from '../HomePageModals/CreateGroupDirectMessage/CreateGroupDirectMessage'
+import DeleteGroupDirectMessageModal from '../HomePageModals/DeleteGroupDirectMessage/DeleteGroupGDM'
+import EditGroupDirectMessageModal from '../HomePageModals/EditGroupDirectMessage/EditGroupDirectMessage'
 
-
-function SideBar({ channels }) {
+function SideBar({ channels, directMessages }) {
   const history = useHistory()
   const [activeId, setActiveId] = useState(null);
-  
+  const user = useSelector((state) => state.session.user);
+  const userdms = directMessages.filter(dm => dm.users.includes(user.id))
+  const gdms = useSelector(state => Object.values(state.directMessages.gdms))
+
   return (
     <div className='home-sidebar-container'>
         <div className='home-sidebar-heading-container'>
@@ -38,6 +46,45 @@ function SideBar({ channels }) {
               </div>
             </div>
           ))}
+          <div className='home-sidebar-channels-header'>
+            <div className='home-sidebar-channels-header-title'>Direct Messages</div>
+            <OpenModalButton className={'add-channel-button'} buttonText={'+'} modalComponent={<CreateDirectMessageModal />}/>
+          </div>
+          {userdms.map(directMessage => {
+
+
+            return (
+              <div
+                key={directMessage.id}
+                className='home-sidebar-channel'
+                onClick={(e) => history.push(`/home/dm/${directMessage.id}`)}
+              >
+                <div className='home-sidebar-channel-name'>
+                  <div>{user.id === directMessage.user2.id ? directMessage.user1.username : directMessage.user2.username}</div>
+                </div>
+                <div>
+                  <OpenModalButton className={'channel-delete-button'} icon={faTrash} modalComponent={<DeleteDirectMessageModal dmId={directMessage.id} />}/>
+                </div>
+              </div>
+            )
+          })}
+          <div className='home-sidebar-channels-header'>
+            <div className='home-sidebar-channels-header-title'>Group Direct Messages</div>
+            <OpenModalButton className={'add-channel-button'} buttonText={'+'} modalComponent={<CreateGroupDirectMessageModal />}/>
+          </div>
+          {gdms.map(gdm => {
+            return (
+              <div key={gdm.id} className='home-sidebar-channel' onClick={() => history.push(`/home/gdm/${gdm.id}`)}>
+                <div className='home-sidebar-channel-name'>
+                  <div>{gdm.name}</div>
+                </div>
+                <div>
+                  <OpenModalButton className={'channel-edit-button'} icon={faPen} modalComponent={<EditGroupDirectMessageModal gdmId={gdm.id} />}/>
+                  <OpenModalButton className={'channel-delete-button'} icon={faTrash} modalComponent={<DeleteGroupDirectMessageModal gdm={gdm} />}/>
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
   )

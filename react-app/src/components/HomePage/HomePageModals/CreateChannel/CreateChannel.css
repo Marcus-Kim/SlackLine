@@ -85,6 +85,8 @@
 
 .create-channel-modal-exit {
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .create-channel-modal-exit-button:hover {
