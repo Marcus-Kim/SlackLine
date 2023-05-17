@@ -80,6 +80,16 @@ export const actionCreateGroupDirectMessageMessage = (message) => ({
   payload: message
 })
 
+export const actionEditGroupDirectMessageMessage = (message) => ({
+  type: EDIT_GROUP_DIRECT_MESSAGE,
+  payload: message
+})
+
+export const actionDeleteGroupDirectMessageMessage = (message) => ({
+  type: DELETE_GROUP_DIRECT_MESSAGE,
+  payload: message
+})
+
 // THUNKS
 export const thunkGetAllMessages = () => async (dispatch) => {
   const response = await fetch('/api/messages/');
@@ -277,6 +287,25 @@ export default function reducer(state = initialState, action) {
       };
       if (!newState.groupDirectMessages[action.payload.group_direct_message_id]) newState.groupDirectMessages[action.payload.group_direct_message_id] = {}
       newState.groupDirectMessages[action.payload.group_direct_message_id][action.payload.id] = action.payload
+      return newState;
+    }
+    case EDIT_GROUP_DIRECT_MESSAGE: {
+      const newState = {
+        channelMessages: { ...state.channelMessages },
+        directMessages: { ...state.directMessages },
+        groupDirectMessages: { ...state.groupDirectMessages }
+      };
+      newState.groupDirectMessages[action.payload.group_direct_message_id][action.payload.id] = action.payload;
+      return newState;
+    }
+    case DELETE_GROUP_DIRECT_MESSAGE: {
+      const newState = {
+        channelMessages: { ...state.channelMessages },
+        directMessages: { ...state.directMessages },
+        groupDirectMessages: { ...state.groupDirectMessages }
+      };
+      console.log("IN THE ACTION")
+      delete newState.groupDirectMessages[action.payload.group_direct_message_id][action.payload.id];
       return newState;
     }
     default:

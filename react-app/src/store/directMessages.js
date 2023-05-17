@@ -41,6 +41,11 @@ export const actionUpdateGDM = (gdm) => ({
   payload: gdm
 })
 
+const actionDeleteGDM = (gdm) => ({
+  type: DELETE_GDM,
+  payload: gdm
+})
+
 // DM THUNKS
 export const thunkGetAllDMS = () => async (dispatch) => {
   const response = await fetch('/api/direct_messages/');
@@ -103,7 +108,6 @@ export const thunkCreateGDM = (gdm) => async (dispatch) => {
 }
 
 export const thunkAddUsersGDM = (gdm, users) => async (dispatch) => {
-  console.log("HELLO", users)
   const response = await fetch(`/api/group_direct_messages/${gdm}`, {
     method: ['POST'],
     headers: { 'Content-Type': 'application/json' },
@@ -113,6 +117,32 @@ export const thunkAddUsersGDM = (gdm, users) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(actionUpdateGDM(data))
+    return data;
+  }
+}
+
+export const thunkDeleteGDM = (gdm) => async (dispatch) => {
+  const response = await fetch(`/api/group_direct_messages/${gdm.id}`, {
+    method: ['DELETE']
+  })
+
+  if (response.ok) {
+    const data = response.json();
+    dispatch(actionDeleteGDM(data));
+    return data;
+  }
+}
+
+export const thunkEditGDM = (gdm, gdmId) => async (dispatch) => {
+  const response = await fetch(`/api/group_direct_messages/${gdmId}`, {
+    method: ['PUT'],
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(gdm)
+  })
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(actionUpdateGDM(data));
     return data;
   }
 }
@@ -173,6 +203,14 @@ export default function reducer(state = initialState, action) {
         gdms: { ...state.gdms }
       };
       newState.gdms[action.payload.id] = action.payload;
+      return newState;
+    }
+    case DELETE_GDM: {
+      const newState = {
+        dms: { ...state.dms },
+        gdms: { ...state.gdms }
+      };
+      delete newState.gdms[action.payload.id];
       return newState;
     }
     default:

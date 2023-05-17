@@ -14,7 +14,7 @@ class GroupDirectMessageMessage(db.Model):
     created_at = db.Column(db.Date, default=datetime.now(tz=None), nullable=False)
 
     #TODO Relationships
-    direct_message = db.relationship("GroupDirectMessage", back_populates='group_direct_message_message')
+    group_direct_message = db.relationship("GroupDirectMessage", back_populates='group_direct_message_messages')
     user = db.relationship("User", back_populates='group_direct_message_messages')
 
     @property

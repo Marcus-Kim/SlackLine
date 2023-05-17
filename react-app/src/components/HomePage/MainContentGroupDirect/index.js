@@ -10,6 +10,11 @@ import { faDoorClosed, faDoorOpen, faPen, faTrash } from '@fortawesome/free-soli
 import { actionCreateGroupDirectMessageMessage } from "../../../store/messages";
 import { actionUpdateGDM } from "../../../store/directMessages";
 import { thunkGetAllGroupDirectMessageMessages } from "../../../store/messages";
+import DeleteGroupDirectMessageModal from "../HomePageModals/DeleteGroupDirectMessage/DeleteGroupGDM";
+import EditGroupDirectMessageMessage from "../HomePageModals/EditGroupDirectMessageMessage/EditGroupDirectMessageMessage";
+import { actionEditGroupDirectMessageMessage } from "../../../store/messages";
+import { actionDeleteGroupDirectMessageMessage } from "../../../store/messages";
+import DeleteGroupDirectMessageMessage from "../HomePageModals/DeleteGroupDirectMessageMessage/DeleteGroupDirectMessageMessage";
 let socket;
 
 function MainContentGroupDirect() {
@@ -38,7 +43,7 @@ function MainContentGroupDirect() {
     if (selectedGdm) {
       dispatch(thunkGetAllGroupDirectMessageMessages());
     }
-  }, [dispatch, selectedGdm?.users.length, selectedGdm])
+  }, [dispatch, selectedGdm?.users.length, selectedGdm, Object.values(messages).length])
 
   const userIsInGDM = selectedGdm.users.includes(user.id)
 
@@ -51,6 +56,14 @@ function MainContentGroupDirect() {
 
     socket.on('added_user_to_gdm', (gdm) => {
       dispatch(actionUpdateGDM(gdm));
+    })
+
+    socket.on('group_direct_message_message_edited', (message) => {
+      dispatch(actionEditGroupDirectMessageMessage(message));
+    })
+
+    socket.on('group_direct_message_message_deleted', (message) => {
+      dispatch(actionDeleteGroupDirectMessageMessage(message))
     })
 
     return (() => {
@@ -115,8 +128,8 @@ function MainContentGroupDirect() {
             </div>
             {user.id === message.user_id && (
                   <div className='message-edit-delete-buttons'>
-                    <OpenModalButton className={'message-edit-button'} icon={faPen} />
-                    <OpenModalButton className={'message-delete-button'} icon={faTrash} />
+                    <OpenModalButton className={'message-edit-button'} icon={faPen} modalComponent={<EditGroupDirectMessageMessage messageId={message.id} messageBody={message.body} socket={socket} />} />
+                    <OpenModalButton className={'message-delete-button'} icon={faTrash} modalComponent={<DeleteGroupDirectMessageMessage message={message} socket={socket} />}/>
                   </div>
                 )}
           </div>

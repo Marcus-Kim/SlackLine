@@ -34,7 +34,7 @@ def create_group_direct_message():
 @login_required
 def edit_group_direct_message(groupDirectMessageId):
     req_body = request.get_json()
-    new_name = req_body['new_name']
+    new_name = req_body['name']
     group_direct_message = GroupDirectMessage.query.get(groupDirectMessageId)
 
     group_direct_message.name = new_name

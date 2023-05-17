@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux'
 import CreateDirectMessageModal from '../HomePageModals/CreateDirectMessage/CreateDirectMessage'
 import DeleteDirectMessageModal from '../HomePageModals/DeleteDirectMessage/DeleteDirectMessage'
 import CreateGroupDirectMessageModal from '../HomePageModals/CreateGroupDirectMessage/CreateGroupDirectMessage'
+import DeleteGroupDirectMessageModal from '../HomePageModals/DeleteGroupDirectMessage/DeleteGroupGDM'
+import EditGroupDirectMessageModal from '../HomePageModals/EditGroupDirectMessage/EditGroupDirectMessage'
 
 function SideBar({ channels, directMessages }) {
   const history = useHistory()
@@ -77,8 +79,8 @@ function SideBar({ channels, directMessages }) {
                   <div>{gdm.name}</div>
                 </div>
                 <div>
-                  <OpenModalButton className={'channel-edit-button'} icon={faPen}/>
-                  <OpenModalButton className={'channel-delete-button'} icon={faTrash}/>
+                  <OpenModalButton className={'channel-edit-button'} icon={faPen} modalComponent={<EditGroupDirectMessageModal gdmId={gdm.id} />}/>
+                  <OpenModalButton className={'channel-delete-button'} icon={faTrash} modalComponent={<DeleteGroupDirectMessageModal gdm={gdm} />}/>
                 </div>
               </div>
             )

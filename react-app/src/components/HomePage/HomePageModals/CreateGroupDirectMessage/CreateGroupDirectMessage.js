@@ -10,13 +10,14 @@ import { thunkAddUsersGDM } from "../../../../store/directMessages";
 
 function CreateGroupDirectMessageModal() {
   const { closeModal } = useModal();
+  const allGdm = useSelector(state => Object.values(state.directMessages.gdms))
   const dispatch = useDispatch();
-  const history = useHistory();
   const users = useSelector(state => Object.values(state.allUsers))
   const [name, setName] = useState('');
   const [listValues, setListValues] = useState([])
   const [isButtonActive, setIsButtonActive] = useState(false);
-
+  const [errors, setErrors] = useState([])
+  console.log(errors)
   const handleCheckboxChange = (e, user) => {
     if (e.target.checked) { // If the id is in the array
       setListValues([...listValues, user.id]);
@@ -29,9 +30,21 @@ function CreateGroupDirectMessageModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const newGroupDM = {
       name: name
+    }
+
+    for (let gdm of allGdm) {
+      if (name === gdm.name) {
+        setErrors(['Name already exists']);
+        return; // Exit the function if there are errors
+      }
+    }
+
+    if (name.length == '') {
+      setErrors(['Name must be longer than 0 characters']);
+      return;
     }
 
     const data = await dispatch(thunkCreateGDM(newGroupDM));
@@ -52,6 +65,11 @@ function CreateGroupDirectMessageModal() {
       <div className="create-channel-modal-description">
         Create a group message!
       </div>
+      <ul>
+        {errors.map((error, idx) => (
+          <li key={idx}>{error}</li>
+        ))}
+      </ul>
       <form onSubmit={e => handleSubmit(e)} className="create-channel-modal-form-container">
         <div className="channel-name-input-container">
           <label className="create-channel-input-label">Name</label>

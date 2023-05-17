@@ -87,7 +87,6 @@ def handle_edit_direct_message(data):
 @socketio.on('delete_direct_message_message')
 def handle_delete_direct_message_message(data):
     message = DirectMessageMessage.query.get(data['id'])
-    print(message)
     db.session.delete(message)
     db.session.commit()
 
@@ -108,18 +107,18 @@ def handle_create_group_direct_message_message(message):
 
 @socketio.on('edit_group_direct_message_message')
 def handle_edit_group_direct_message_message(messageData):
-    message = GroupDirectMessageMessage.query.get(messageData['id'])
+    print(messageData['messageId'])
+    message = GroupDirectMessageMessage.query.get(messageData['messageId'])
 
-    message.body = messageData['body']
+    message.body = messageData['newMessage']
     db.session.commit()
 
-    emit('group_direct_message_message_edited', message, broadcast=True)
+    emit('group_direct_message_message_edited', message.to_dict(), broadcast=True)
 
 @socketio.on('delete_group_direct_message_message')
-def handle_delete_group_direct_message_message(messageId):
-    message = GroupDirectMessageMessage.query.get(messageId)
-
-    db.session.delete(message)
+def handle_delete_group_direct_message_message(message):
+    selectedMessage = GroupDirectMessageMessage.query.get(message['id'])
+    db.session.delete(selectedMessage)
     db.session.commit()
 
-    emit('group_direct_message_message_deleted', messageId, broadcast=True)
+    emit('group_direct_message_message_deleted', message, broadcast=True)
